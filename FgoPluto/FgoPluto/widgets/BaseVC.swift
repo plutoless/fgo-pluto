@@ -12,13 +12,9 @@ import UIKit
 class BaseVC : UIViewController{
     override func loadView() {
         super.loadView()
+        self.view.backgroundColor = .white
         
         self.create_contents()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
         self.set_constraints()
     }
 }

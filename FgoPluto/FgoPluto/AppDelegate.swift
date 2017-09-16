@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let mainTabVC = MainTabVC()
         let navVC = NavigationController(rootViewController: mainTabVC)
+        navVC.setNavigationBarHidden(true, animated: false)
         navVC.navigationItem.setHidesBackButton(true, animated: false)
         
         window = UIWindow()

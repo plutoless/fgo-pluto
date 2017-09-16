@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D311D1E1F6D23FD00E07B10 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D311D1D1F6D23FD00E07B10 /* TabBar.swift */; };
+		0D311D201F6D24EA00E07B10 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D311D1F1F6D24EA00E07B10 /* BaseView.swift */; };
+		0D311D231F6D383900E07B10 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D311D221F6D383900E07B10 /* Font.swift */; };
+		0D311D2B1F6D3E0500E07B10 /* menu_plan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D311D2A1F6D3E0500E07B10 /* menu_plan@2x.png */; };
+		0D311D2E1F6D3F8800E07B10 /* menu_item@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D311D2C1F6D3F8800E07B10 /* menu_item@2x.png */; };
+		0D311D2F1F6D3F8800E07B10 /* menu_servant@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D311D2D1F6D3F8800E07B10 /* menu_servant@2x.png */; };
+		0D311D311F6D4A9800E07B10 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D311D301F6D4A9800E07B10 /* UIImage.swift */; };
+		0D692EBA1F6D4EE500E4B8AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D692EB91F6D4EE500E4B8AF /* UIColor.swift */; };
+		0D692EBC1F6D512D00E4B8AF /* toolbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D692EBB1F6D512D00E4B8AF /* toolbar_bg@2x.png */; };
 		0D762D661F6CF45B00C3E8BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D651F6CF45B00C3E8BF /* AppDelegate.swift */; };
 		0D762D6D1F6CF45B00C3E8BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D762D6C1F6CF45B00C3E8BF /* Assets.xcassets */; };
 		0D762D701F6CF45B00C3E8BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D762D6E1F6CF45B00C3E8BF /* LaunchScreen.storyboard */; };
@@ -40,6 +49,15 @@
 /* Begin PBXFileReference section */
 		0173350281DE56C7D90BF342 /* Pods-FgoPlutoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FgoPlutoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FgoPlutoTests/Pods-FgoPlutoTests.release.xcconfig"; sourceTree = "<group>"; };
 		0515D017A01D1AC4D5745904 /* Pods-FgoPluto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FgoPluto.release.xcconfig"; path = "Pods/Target Support Files/Pods-FgoPluto/Pods-FgoPluto.release.xcconfig"; sourceTree = "<group>"; };
+		0D311D1D1F6D23FD00E07B10 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		0D311D1F1F6D24EA00E07B10 /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		0D311D221F6D383900E07B10 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		0D311D2A1F6D3E0500E07B10 /* menu_plan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_plan@2x.png"; sourceTree = "<group>"; };
+		0D311D2C1F6D3F8800E07B10 /* menu_item@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_item@2x.png"; sourceTree = "<group>"; };
+		0D311D2D1F6D3F8800E07B10 /* menu_servant@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_servant@2x.png"; sourceTree = "<group>"; };
+		0D311D301F6D4A9800E07B10 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		0D692EB91F6D4EE500E4B8AF /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		0D692EBB1F6D512D00E4B8AF /* toolbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar_bg@2x.png"; sourceTree = "<group>"; };
 		0D762D621F6CF45B00C3E8BF /* FgoPluto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FgoPluto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D762D651F6CF45B00C3E8BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D762D6C1F6CF45B00C3E8BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -91,6 +109,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D311D211F6D382D00E07B10 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0D692EB91F6D4EE500E4B8AF /* UIColor.swift */,
+				0D311D221F6D383900E07B10 /* Font.swift */,
+				0D311D301F6D4A9800E07B10 /* UIImage.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		0D311D281F6D3E0500E07B10 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				0D311D291F6D3E0500E07B10 /* images */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		0D311D291F6D3E0500E07B10 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				0D692EBB1F6D512D00E4B8AF /* toolbar_bg@2x.png */,
+				0D311D2C1F6D3F8800E07B10 /* menu_item@2x.png */,
+				0D311D2D1F6D3F8800E07B10 /* menu_servant@2x.png */,
+				0D311D2A1F6D3E0500E07B10 /* menu_plan@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		0D762D591F6CF45B00C3E8BF = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +163,8 @@
 		0D762D641F6CF45B00C3E8BF /* FgoPluto */ = {
 			isa = PBXGroup;
 			children = (
+				0D311D281F6D3E0500E07B10 /* resources */,
+				0D311D211F6D382D00E07B10 /* extensions */,
 				0D762D931F6CF4EC00C3E8BF /* views */,
 				0D762D941F6CF4EC00C3E8BF /* widgets */,
 				0D762D651F6CF45B00C3E8BF /* AppDelegate.swift */,
@@ -157,6 +206,8 @@
 			children = (
 				0D762D951F6CF4EC00C3E8BF /* NavigationController.swift */,
 				0D762D991F6CF67E00C3E8BF /* BaseVC.swift */,
+				0D311D1D1F6D23FD00E07B10 /* TabBar.swift */,
+				0D311D1F1F6D24EA00E07B10 /* BaseView.swift */,
 			);
 			path = widgets;
 			sourceTree = "<group>";
@@ -261,6 +312,7 @@
 				TargetAttributes = {
 					0D762D611F6CF45B00C3E8BF = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = GM72UGLGZW;
 						ProvisioningStyle = Automatic;
 					};
 					0D762D751F6CF45B00C3E8BF = {
@@ -300,8 +352,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D311D2E1F6D3F8800E07B10 /* menu_item@2x.png in Resources */,
+				0D311D2B1F6D3E0500E07B10 /* menu_plan@2x.png in Resources */,
 				0D762D701F6CF45B00C3E8BF /* LaunchScreen.storyboard in Resources */,
+				0D311D2F1F6D3F8800E07B10 /* menu_servant@2x.png in Resources */,
 				0D762D6D1F6CF45B00C3E8BF /* Assets.xcassets in Resources */,
+				0D692EBC1F6D512D00E4B8AF /* toolbar_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,9 +521,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D762D661F6CF45B00C3E8BF /* AppDelegate.swift in Sources */,
+				0D311D311F6D4A9800E07B10 /* UIImage.swift in Sources */,
 				0D762D981F6CF5EC00C3E8BF /* MainTabVC.swift in Sources */,
+				0D311D231F6D383900E07B10 /* Font.swift in Sources */,
+				0D692EBA1F6D4EE500E4B8AF /* UIColor.swift in Sources */,
 				0D762D961F6CF4EC00C3E8BF /* NavigationController.swift in Sources */,
+				0D311D201F6D24EA00E07B10 /* BaseView.swift in Sources */,
 				0D762D9A1F6CF67E00C3E8BF /* BaseVC.swift in Sources */,
+				0D311D1E1F6D23FD00E07B10 /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +673,7 @@
 			baseConfigurationReference = E0FA342DF892A71901AAFC1E /* Pods-FgoPluto.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GM72UGLGZW;
 				INFOPLIST_FILE = FgoPluto/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -626,6 +688,7 @@
 			baseConfigurationReference = 0515D017A01D1AC4D5745904 /* Pods-FgoPluto.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GM72UGLGZW;
 				INFOPLIST_FILE = FgoPluto/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -712,6 +775,7 @@
 				0D762D8C1F6CF45B00C3E8BF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0D762D8D1F6CF45B00C3E8BF /* Build configuration list for PBXNativeTarget "FgoPlutoTests" */ = {
 			isa = XCConfigurationList;
@@ -720,6 +784,7 @@
 				0D762D8F1F6CF45B00C3E8BF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0D762D901F6CF45B00C3E8BF /* Build configuration list for PBXNativeTarget "FgoPlutoUITests" */ = {
 			isa = XCConfigurationList;
@@ -728,6 +793,7 @@
 				0D762D921F6CF45B00C3E8BF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
