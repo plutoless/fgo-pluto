@@ -1,0 +1,735 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D762D661F6CF45B00C3E8BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D651F6CF45B00C3E8BF /* AppDelegate.swift */; };
+		0D762D6D1F6CF45B00C3E8BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D762D6C1F6CF45B00C3E8BF /* Assets.xcassets */; };
+		0D762D701F6CF45B00C3E8BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D762D6E1F6CF45B00C3E8BF /* LaunchScreen.storyboard */; };
+		0D762D7B1F6CF45B00C3E8BF /* FgoPlutoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D7A1F6CF45B00C3E8BF /* FgoPlutoTests.swift */; };
+		0D762D861F6CF45B00C3E8BF /* FgoPlutoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D851F6CF45B00C3E8BF /* FgoPlutoUITests.swift */; };
+		0D762D961F6CF4EC00C3E8BF /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D951F6CF4EC00C3E8BF /* NavigationController.swift */; };
+		0D762D981F6CF5EC00C3E8BF /* MainTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D971F6CF5EC00C3E8BF /* MainTabVC.swift */; };
+		0D762D9A1F6CF67E00C3E8BF /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D991F6CF67E00C3E8BF /* BaseVC.swift */; };
+		4EC8F27AD2B7657BE79EC394 /* Pods_FgoPlutoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AC79D5F2C53458BA7CC4E6 /* Pods_FgoPlutoUITests.framework */; };
+		B8A77BA72F363D19948B0558 /* Pods_FgoPluto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87EEEF32EF75706D57E05916 /* Pods_FgoPluto.framework */; };
+		CA0DBB927FCDDC0F53676609 /* Pods_FgoPlutoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BD8404AB094CCAA1D9C3505 /* Pods_FgoPlutoTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0D762D771F6CF45B00C3E8BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0D762D5A1F6CF45B00C3E8BF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D762D611F6CF45B00C3E8BF;
+			remoteInfo = FgoPluto;
+		};
+		0D762D821F6CF45B00C3E8BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0D762D5A1F6CF45B00C3E8BF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D762D611F6CF45B00C3E8BF;
+			remoteInfo = FgoPluto;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0173350281DE56C7D90BF342 /* Pods-FgoPlutoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FgoPlutoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FgoPlutoTests/Pods-FgoPlutoTests.release.xcconfig"; sourceTree = "<group>"; };
+		0515D017A01D1AC4D5745904 /* Pods-FgoPluto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FgoPluto.release.xcconfig"; path = "Pods/Target Support Files/Pods-FgoPluto/Pods-FgoPluto.release.xcconfig"; sourceTree = "<group>"; };
+		0D762D621F6CF45B00C3E8BF /* FgoPluto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FgoPluto.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D762D651F6CF45B00C3E8BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0D762D6C1F6CF45B00C3E8BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0D762D6F1F6CF45B00C3E8BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0D762D711F6CF45B00C3E8BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D762D761F6CF45B00C3E8BF /* FgoPlutoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FgoPlutoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D762D7A1F6CF45B00C3E8BF /* FgoPlutoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FgoPlutoTests.swift; sourceTree = "<group>"; };
+		0D762D7C1F6CF45B00C3E8BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D762D811F6CF45B00C3E8BF /* FgoPlutoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FgoPlutoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D762D851F6CF45B00C3E8BF /* FgoPlutoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FgoPlutoUITests.swift; sourceTree = "<group>"; };
+		0D762D871F6CF45B00C3E8BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D762D951F6CF4EC00C3E8BF /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		0D762D971F6CF5EC00C3E8BF /* MainTabVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabVC.swift; sourceTree = "<group>"; };
+		0D762D991F6CF67E00C3E8BF /* BaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
+		2CDB549512DADCE82A247910 /* Pods-FgoPlutoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FgoPlutoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FgoPlutoUITests/Pods-FgoPlutoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		3BD8404AB094CCAA1D9C3505 /* Pods_FgoPlutoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FgoPlutoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51EB34441C47EA6866991C4E /* Pods-FgoPlutoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FgoPlutoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FgoPlutoUITests/Pods-FgoPlutoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		60F6DC0A5FAE531B2E6B3B36 /* Pods-FgoPlutoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FgoPlutoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FgoPlutoTests/Pods-FgoPlutoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		87EEEF32EF75706D57E05916 /* Pods_FgoPluto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FgoPluto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		88AC79D5F2C53458BA7CC4E6 /* Pods_FgoPlutoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FgoPlutoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0FA342DF892A71901AAFC1E /* Pods-FgoPluto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FgoPluto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FgoPluto/Pods-FgoPluto.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0D762D5F1F6CF45B00C3E8BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8A77BA72F363D19948B0558 /* Pods_FgoPluto.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D762D731F6CF45B00C3E8BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA0DBB927FCDDC0F53676609 /* Pods_FgoPlutoTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D762D7E1F6CF45B00C3E8BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EC8F27AD2B7657BE79EC394 /* Pods_FgoPlutoUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0D762D591F6CF45B00C3E8BF = {
+			isa = PBXGroup;
+			children = (
+				0D762D641F6CF45B00C3E8BF /* FgoPluto */,
+				0D762D791F6CF45B00C3E8BF /* FgoPlutoTests */,
+				0D762D841F6CF45B00C3E8BF /* FgoPlutoUITests */,
+				0D762D631F6CF45B00C3E8BF /* Products */,
+				9C5447949AC1438186C5F648 /* Pods */,
+				4D56B7DA5DCFCBA14333EEA4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		0D762D631F6CF45B00C3E8BF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0D762D621F6CF45B00C3E8BF /* FgoPluto.app */,
+				0D762D761F6CF45B00C3E8BF /* FgoPlutoTests.xctest */,
+				0D762D811F6CF45B00C3E8BF /* FgoPlutoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0D762D641F6CF45B00C3E8BF /* FgoPluto */ = {
+			isa = PBXGroup;
+			children = (
+				0D762D931F6CF4EC00C3E8BF /* views */,
+				0D762D941F6CF4EC00C3E8BF /* widgets */,
+				0D762D651F6CF45B00C3E8BF /* AppDelegate.swift */,
+				0D762D6C1F6CF45B00C3E8BF /* Assets.xcassets */,
+				0D762D6E1F6CF45B00C3E8BF /* LaunchScreen.storyboard */,
+				0D762D711F6CF45B00C3E8BF /* Info.plist */,
+			);
+			path = FgoPluto;
+			sourceTree = "<group>";
+		};
+		0D762D791F6CF45B00C3E8BF /* FgoPlutoTests */ = {
+			isa = PBXGroup;
+			children = (
+				0D762D7A1F6CF45B00C3E8BF /* FgoPlutoTests.swift */,
+				0D762D7C1F6CF45B00C3E8BF /* Info.plist */,
+			);
+			path = FgoPlutoTests;
+			sourceTree = "<group>";
+		};
+		0D762D841F6CF45B00C3E8BF /* FgoPlutoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0D762D851F6CF45B00C3E8BF /* FgoPlutoUITests.swift */,
+				0D762D871F6CF45B00C3E8BF /* Info.plist */,
+			);
+			path = FgoPlutoUITests;
+			sourceTree = "<group>";
+		};
+		0D762D931F6CF4EC00C3E8BF /* views */ = {
+			isa = PBXGroup;
+			children = (
+				0D762D971F6CF5EC00C3E8BF /* MainTabVC.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		0D762D941F6CF4EC00C3E8BF /* widgets */ = {
+			isa = PBXGroup;
+			children = (
+				0D762D951F6CF4EC00C3E8BF /* NavigationController.swift */,
+				0D762D991F6CF67E00C3E8BF /* BaseVC.swift */,
+			);
+			path = widgets;
+			sourceTree = "<group>";
+		};
+		4D56B7DA5DCFCBA14333EEA4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				87EEEF32EF75706D57E05916 /* Pods_FgoPluto.framework */,
+				3BD8404AB094CCAA1D9C3505 /* Pods_FgoPlutoTests.framework */,
+				88AC79D5F2C53458BA7CC4E6 /* Pods_FgoPlutoUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9C5447949AC1438186C5F648 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E0FA342DF892A71901AAFC1E /* Pods-FgoPluto.debug.xcconfig */,
+				0515D017A01D1AC4D5745904 /* Pods-FgoPluto.release.xcconfig */,
+				60F6DC0A5FAE531B2E6B3B36 /* Pods-FgoPlutoTests.debug.xcconfig */,
+				0173350281DE56C7D90BF342 /* Pods-FgoPlutoTests.release.xcconfig */,
+				51EB34441C47EA6866991C4E /* Pods-FgoPlutoUITests.debug.xcconfig */,
+				2CDB549512DADCE82A247910 /* Pods-FgoPlutoUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0D762D611F6CF45B00C3E8BF /* FgoPluto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D762D8A1F6CF45B00C3E8BF /* Build configuration list for PBXNativeTarget "FgoPluto" */;
+			buildPhases = (
+				9FD353B48BEF04D0FBF8DF61 /* [CP] Check Pods Manifest.lock */,
+				0D762D5E1F6CF45B00C3E8BF /* Sources */,
+				0D762D5F1F6CF45B00C3E8BF /* Frameworks */,
+				0D762D601F6CF45B00C3E8BF /* Resources */,
+				3F7D28EA4D02490A8F0477C3 /* [CP] Embed Pods Frameworks */,
+				F83B608EA9FDD97BA6F05260 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FgoPluto;
+			productName = FgoPluto;
+			productReference = 0D762D621F6CF45B00C3E8BF /* FgoPluto.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0D762D751F6CF45B00C3E8BF /* FgoPlutoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D762D8D1F6CF45B00C3E8BF /* Build configuration list for PBXNativeTarget "FgoPlutoTests" */;
+			buildPhases = (
+				1D60A515EC71FDB2C33E4ED5 /* [CP] Check Pods Manifest.lock */,
+				0D762D721F6CF45B00C3E8BF /* Sources */,
+				0D762D731F6CF45B00C3E8BF /* Frameworks */,
+				0D762D741F6CF45B00C3E8BF /* Resources */,
+				6B3E71A7B7A4EAFEA7DB3D1E /* [CP] Embed Pods Frameworks */,
+				2A860C8C1C6A586CC62BB85A /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D762D781F6CF45B00C3E8BF /* PBXTargetDependency */,
+			);
+			name = FgoPlutoTests;
+			productName = FgoPlutoTests;
+			productReference = 0D762D761F6CF45B00C3E8BF /* FgoPlutoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0D762D801F6CF45B00C3E8BF /* FgoPlutoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D762D901F6CF45B00C3E8BF /* Build configuration list for PBXNativeTarget "FgoPlutoUITests" */;
+			buildPhases = (
+				5B5ECD9039B17C1AE746F9F2 /* [CP] Check Pods Manifest.lock */,
+				0D762D7D1F6CF45B00C3E8BF /* Sources */,
+				0D762D7E1F6CF45B00C3E8BF /* Frameworks */,
+				0D762D7F1F6CF45B00C3E8BF /* Resources */,
+				2338B26566DF3D86B50C6CA9 /* [CP] Embed Pods Frameworks */,
+				3A0595907609E10725466648 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D762D831F6CF45B00C3E8BF /* PBXTargetDependency */,
+			);
+			name = FgoPlutoUITests;
+			productName = FgoPlutoUITests;
+			productReference = 0D762D811F6CF45B00C3E8BF /* FgoPlutoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0D762D5A1F6CF45B00C3E8BF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Plutoless Studio";
+				TargetAttributes = {
+					0D762D611F6CF45B00C3E8BF = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+					};
+					0D762D751F6CF45B00C3E8BF = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 0D762D611F6CF45B00C3E8BF;
+					};
+					0D762D801F6CF45B00C3E8BF = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 0D762D611F6CF45B00C3E8BF;
+					};
+				};
+			};
+			buildConfigurationList = 0D762D5D1F6CF45B00C3E8BF /* Build configuration list for PBXProject "FgoPluto" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0D762D591F6CF45B00C3E8BF;
+			productRefGroup = 0D762D631F6CF45B00C3E8BF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0D762D611F6CF45B00C3E8BF /* FgoPluto */,
+				0D762D751F6CF45B00C3E8BF /* FgoPlutoTests */,
+				0D762D801F6CF45B00C3E8BF /* FgoPlutoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0D762D601F6CF45B00C3E8BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D762D701F6CF45B00C3E8BF /* LaunchScreen.storyboard in Resources */,
+				0D762D6D1F6CF45B00C3E8BF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D762D741F6CF45B00C3E8BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D762D7F1F6CF45B00C3E8BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1D60A515EC71FDB2C33E4ED5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		2338B26566DF3D86B50C6CA9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FgoPlutoUITests/Pods-FgoPlutoUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2A860C8C1C6A586CC62BB85A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FgoPlutoTests/Pods-FgoPlutoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A0595907609E10725466648 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FgoPlutoUITests/Pods-FgoPlutoUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3F7D28EA4D02490A8F0477C3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FgoPluto/Pods-FgoPluto-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5B5ECD9039B17C1AE746F9F2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6B3E71A7B7A4EAFEA7DB3D1E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FgoPlutoTests/Pods-FgoPlutoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9FD353B48BEF04D0FBF8DF61 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F83B608EA9FDD97BA6F05260 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FgoPluto/Pods-FgoPluto-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0D762D5E1F6CF45B00C3E8BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D762D661F6CF45B00C3E8BF /* AppDelegate.swift in Sources */,
+				0D762D981F6CF5EC00C3E8BF /* MainTabVC.swift in Sources */,
+				0D762D961F6CF4EC00C3E8BF /* NavigationController.swift in Sources */,
+				0D762D9A1F6CF67E00C3E8BF /* BaseVC.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D762D721F6CF45B00C3E8BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D762D7B1F6CF45B00C3E8BF /* FgoPlutoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D762D7D1F6CF45B00C3E8BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D762D861F6CF45B00C3E8BF /* FgoPlutoUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0D762D781F6CF45B00C3E8BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D762D611F6CF45B00C3E8BF /* FgoPluto */;
+			targetProxy = 0D762D771F6CF45B00C3E8BF /* PBXContainerItemProxy */;
+		};
+		0D762D831F6CF45B00C3E8BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D762D611F6CF45B00C3E8BF /* FgoPluto */;
+			targetProxy = 0D762D821F6CF45B00C3E8BF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0D762D6E1F6CF45B00C3E8BF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D762D6F1F6CF45B00C3E8BF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0D762D881F6CF45B00C3E8BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		0D762D891F6CF45B00C3E8BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0D762D8B1F6CF45B00C3E8BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E0FA342DF892A71901AAFC1E /* Pods-FgoPluto.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = FgoPluto/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plutoless.studio.fgo.pluto.FgoPluto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		0D762D8C1F6CF45B00C3E8BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0515D017A01D1AC4D5745904 /* Pods-FgoPluto.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = FgoPluto/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plutoless.studio.fgo.pluto.FgoPluto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		0D762D8E1F6CF45B00C3E8BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 60F6DC0A5FAE531B2E6B3B36 /* Pods-FgoPlutoTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = FgoPlutoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plutoless.studio.fgo.pluto.FgoPlutoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FgoPluto.app/FgoPluto";
+			};
+			name = Debug;
+		};
+		0D762D8F1F6CF45B00C3E8BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0173350281DE56C7D90BF342 /* Pods-FgoPlutoTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = FgoPlutoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plutoless.studio.fgo.pluto.FgoPlutoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FgoPluto.app/FgoPluto";
+			};
+			name = Release;
+		};
+		0D762D911F6CF45B00C3E8BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 51EB34441C47EA6866991C4E /* Pods-FgoPlutoUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = FgoPlutoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plutoless.studio.fgo.pluto.FgoPlutoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = FgoPluto;
+			};
+			name = Debug;
+		};
+		0D762D921F6CF45B00C3E8BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2CDB549512DADCE82A247910 /* Pods-FgoPlutoUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = FgoPlutoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plutoless.studio.fgo.pluto.FgoPlutoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = FgoPluto;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0D762D5D1F6CF45B00C3E8BF /* Build configuration list for PBXProject "FgoPluto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D762D881F6CF45B00C3E8BF /* Debug */,
+				0D762D891F6CF45B00C3E8BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0D762D8A1F6CF45B00C3E8BF /* Build configuration list for PBXNativeTarget "FgoPluto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D762D8B1F6CF45B00C3E8BF /* Debug */,
+				0D762D8C1F6CF45B00C3E8BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0D762D8D1F6CF45B00C3E8BF /* Build configuration list for PBXNativeTarget "FgoPlutoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D762D8E1F6CF45B00C3E8BF /* Debug */,
+				0D762D8F1F6CF45B00C3E8BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0D762D901F6CF45B00C3E8BF /* Build configuration list for PBXNativeTarget "FgoPlutoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D762D911F6CF45B00C3E8BF /* Debug */,
+				0D762D921F6CF45B00C3E8BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0D762D5A1F6CF45B00C3E8BF /* Project object */;
+}
