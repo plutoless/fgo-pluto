@@ -16,6 +16,8 @@
 		0D311D311F6D4A9800E07B10 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D311D301F6D4A9800E07B10 /* UIImage.swift */; };
 		0D692EBA1F6D4EE500E4B8AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D692EB91F6D4EE500E4B8AF /* UIColor.swift */; };
 		0D692EBC1F6D512D00E4B8AF /* toolbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D692EBB1F6D512D00E4B8AF /* toolbar_bg@2x.png */; };
+		0D692EBF1F6D5D3300E4B8AF /* ServantMgmtVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D692EBE1F6D5D3300E4B8AF /* ServantMgmtVC.swift */; };
+		0D692EC11F6D638800E4B8AF /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D692EC01F6D638800E4B8AF /* NavigationBar.swift */; };
 		0D762D661F6CF45B00C3E8BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D651F6CF45B00C3E8BF /* AppDelegate.swift */; };
 		0D762D6D1F6CF45B00C3E8BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D762D6C1F6CF45B00C3E8BF /* Assets.xcassets */; };
 		0D762D701F6CF45B00C3E8BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D762D6E1F6CF45B00C3E8BF /* LaunchScreen.storyboard */; };
@@ -58,6 +60,8 @@
 		0D311D301F6D4A9800E07B10 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		0D692EB91F6D4EE500E4B8AF /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		0D692EBB1F6D512D00E4B8AF /* toolbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar_bg@2x.png"; sourceTree = "<group>"; };
+		0D692EBE1F6D5D3300E4B8AF /* ServantMgmtVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServantMgmtVC.swift; sourceTree = "<group>"; };
+		0D692EC01F6D638800E4B8AF /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		0D762D621F6CF45B00C3E8BF /* FgoPluto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FgoPluto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D762D651F6CF45B00C3E8BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D762D6C1F6CF45B00C3E8BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -138,6 +142,14 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		0D692EBD1F6D5D1D00E4B8AF /* servant */ = {
+			isa = PBXGroup;
+			children = (
+				0D692EBE1F6D5D3300E4B8AF /* ServantMgmtVC.swift */,
+			);
+			path = servant;
+			sourceTree = "<group>";
+		};
 		0D762D591F6CF45B00C3E8BF = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +208,7 @@
 		0D762D931F6CF4EC00C3E8BF /* views */ = {
 			isa = PBXGroup;
 			children = (
+				0D692EBD1F6D5D1D00E4B8AF /* servant */,
 				0D762D971F6CF5EC00C3E8BF /* MainTabVC.swift */,
 			);
 			path = views;
@@ -208,6 +221,7 @@
 				0D762D991F6CF67E00C3E8BF /* BaseVC.swift */,
 				0D311D1D1F6D23FD00E07B10 /* TabBar.swift */,
 				0D311D1F1F6D24EA00E07B10 /* BaseView.swift */,
+				0D692EC01F6D638800E4B8AF /* NavigationBar.swift */,
 			);
 			path = widgets;
 			sourceTree = "<group>";
@@ -523,7 +537,9 @@
 				0D762D661F6CF45B00C3E8BF /* AppDelegate.swift in Sources */,
 				0D311D311F6D4A9800E07B10 /* UIImage.swift in Sources */,
 				0D762D981F6CF5EC00C3E8BF /* MainTabVC.swift in Sources */,
+				0D692EBF1F6D5D3300E4B8AF /* ServantMgmtVC.swift in Sources */,
 				0D311D231F6D383900E07B10 /* Font.swift in Sources */,
+				0D692EC11F6D638800E4B8AF /* NavigationBar.swift in Sources */,
 				0D692EBA1F6D4EE500E4B8AF /* UIColor.swift in Sources */,
 				0D762D961F6CF4EC00C3E8BF /* NavigationController.swift in Sources */,
 				0D311D201F6D24EA00E07B10 /* BaseView.swift in Sources */,

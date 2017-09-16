@@ -15,6 +15,8 @@ class MainTabVC : BaseVC, TabBarDelegate
         bar.delegate = self
         return bar
     }()
+    
+    internal weak var currenct_vc:BaseVC?
 }
 
 
@@ -27,7 +29,7 @@ extension MainTabVC
         
         //tabbar
         let item = TabBarItem(name: "规划", icon: "menu_plan")
-        let item2 = TabBarItem(name: "英灵", icon: "menu_servant")
+        let item2 = TabBarItem(name: "从者", icon: "menu_servant")
         let item3 = TabBarItem(name: "素材", icon: "menu_item")
         self.tabBar.items = [item, item2, item3]
         self.view.addSubview(self.tabBar)
@@ -42,11 +44,35 @@ extension MainTabVC
             maker.right.equalTo(weakself.view)
         }
     }
+    
+    internal func switchToVC(to_vc:BaseVC){
+        if let vc = self.currenct_vc{
+            vc.removeFromParentViewController()
+            vc.view.removeFromSuperview()
+            vc.didMove(toParentViewController: nil)
+        }
+        
+        self.addChildViewController(to_vc)
+        self.view.insertSubview(to_vc.view, belowSubview: self.tabBar)
+        to_vc.didMove(toParentViewController: self)
+        to_vc.view.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
+            maker.left.equalToSuperview()
+            maker.top.equalToSuperview()
+            maker.right.equalToSuperview()
+            maker.bottom.equalTo(weakself.tabBar)
+        }
+        
+        self.currenct_vc = to_vc
+    }
 }
 
 
 extension MainTabVC{
     internal func didSelectItem(idx: Int) {
-        
+        if(idx == 1){
+            let vc = ServantMgmtVC(viewModel: ServantMgmtVM())
+            self.switchToVC(to_vc: vc)
+        }
     }
 }

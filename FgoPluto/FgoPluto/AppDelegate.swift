@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let mainTabVC = MainTabVC()
+        let mainTabVC = MainTabVC(viewModel: BaseVM())
         let navVC = NavigationController(rootViewController: mainTabVC)
         navVC.setNavigationBarHidden(true, animated: false)
         navVC.navigationItem.setHidesBackButton(true, animated: false)
