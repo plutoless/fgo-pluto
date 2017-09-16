@@ -60,7 +60,7 @@ extension MainTabVC
             maker.left.equalToSuperview()
             maker.top.equalToSuperview()
             maker.right.equalToSuperview()
-            maker.bottom.equalTo(weakself.tabBar)
+            maker.bottom.equalTo(weakself.tabBar.snp.top)
         }
         
         self.currenct_vc = to_vc

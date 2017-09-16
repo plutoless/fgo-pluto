@@ -14,17 +14,24 @@ class ServantMgmtCellVM : BaseVM
     internal var servant_image:UIImage?
     internal var servant_evolve_level:Int = 0
     internal var servant_skills_level:String = "10/6/8"
+    
+    
+    convenience init(servant:Servant) {
+        self.init()
+        
+        self.servant_image = servant.image?.imageScaled(width: 64)
+    }
 }
 
 class ServantMgmtSectionVM : BaseVM
 {
     internal var cells:[ServantMgmtCellVM] = []
+    internal var kind:String = ""
     
-    override init(){
-        super.init()
+    convenience init(kind:String){
+        self.init()
         
-        let cellVM = ServantMgmtCellVM()
-        cells.append(cellVM)
+        self.kind = kind
     }
 }
 
@@ -35,7 +42,17 @@ class ServantMgmtVM : BaseVM
     override init(){
         super.init()
         
-        sections.append(ServantMgmtSectionVM())
+        let servantsMap:[String:[Servant]] = ChaldeaManager.sharedInstance.servantsByClass()
+        
+        for kind:String in servantsMap.keys{
+            let section = ServantMgmtSectionVM()
+            guard let servants = servantsMap[kind] else {continue}
+            for servant:Servant in servants{
+                section.cells.append(ServantMgmtCellVM(servant: servant))
+            }
+            sections.append(section)
+        }
+        
     }
 }
 
@@ -45,16 +62,22 @@ class ServantMgmtCell : UICollectionViewCell
 {
     lazy var servant_image:UIImageView = {
         let view = UIImageView()
+        view.contentMode = .top
+        view.clipsToBounds = true
         return view
     }()
     
     lazy var servant_evolve_label:UILabel = {
         let label = UILabel()
+        label.font = .font(size: 12)
+        label.textColor = UIColor(hex: "#252525")
         return label
     }()
     
     lazy var servant_skills_label:UILabel = {
         let label = UILabel()
+        label.font = .font(size: 12)
+        label.textColor = UIColor(hex: "#A4A4A4")
         return label
     }()
     
@@ -62,7 +85,7 @@ class ServantMgmtCell : UICollectionViewCell
         willSet{
             guard let vm:ServantMgmtCellVM = newValue else {return}
             self.servant_image.image = vm.servant_image
-            self.servant_evolve_label.text = "\(vm.servant_evolve_level)"
+            self.servant_evolve_label.text = "灵基再临(\(vm.servant_evolve_level))"
             self.servant_skills_label.text = vm.servant_skills_level
         }
     }
@@ -105,12 +128,15 @@ class ServantMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     
     lazy var servantCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 80, height: 100)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.itemSize = CGSize(width: 68, height: 100)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = .white
         collection.register(ServantMgmtCell.classForCoder(), forCellWithReuseIdentifier: ServantMgmtVC.REUSE_IDENTIFIER)
         collection.delegate = self
         collection.dataSource = self
+        collection.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
         return collection
     }()
 }

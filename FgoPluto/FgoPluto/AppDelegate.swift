@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navVC.setNavigationBarHidden(true, animated: false)
         navVC.navigationItem.setHidesBackButton(true, animated: false)
         
+        //init chaldeamanager 
+        let _ = ChaldeaManager.sharedInstance
+        
         window = UIWindow()
         
         if let w = window {
