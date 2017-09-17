@@ -73,6 +73,9 @@ extension MainTabVC{
         if(idx == 1){
             let vc = ServantMgmtVC(viewModel: ServantMgmtVM())
             self.switchToVC(to_vc: vc)
+        } else if(idx == 2){
+            let vc = MaterialMgmtVC(viewModel: MaterialMgmtVM())
+            self.switchToVC(to_vc: vc)
         }
     }
 }

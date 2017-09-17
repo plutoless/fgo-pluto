@@ -164,7 +164,7 @@ class ServantMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-        layout.itemSize = CGSize(width: 68, height: 100)
+        layout.itemSize = CGSize(width: 68, height: 110)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = .white
         collection.register(ServantMgmtCell.self, forCellWithReuseIdentifier: ServantMgmtVC.REUSE_IDENTIFIER)

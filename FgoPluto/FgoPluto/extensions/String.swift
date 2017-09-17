@@ -27,3 +27,20 @@ extension URL{
         return self.appendingPathComponent(path)
     }
 }
+
+
+extension String{
+    internal func indexOfSubString(string:String) -> Int?{
+        if let range = self.range(of: string){
+            let startPos = self.distance(from: self.startIndex, to: range.lowerBound)
+            return startPos
+        }
+        return nil;
+    }
+    
+    internal func substringWithRange(lowerBound:Int, length:Int) -> String{
+        let start = self.index(self.startIndex, offsetBy: lowerBound)
+        let end = self.index(start, offsetBy: length)
+        return self.substring(with: start..<end)
+    }
+}

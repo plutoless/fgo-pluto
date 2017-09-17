@@ -19,10 +19,14 @@ extension UIFont{
     }
     
     internal static func bold_font(size:CGFloat) -> UIFont{
-        return .boldSystemFont(ofSize: size)
+        return .systemFont(ofSize: size, weight: UIFontWeightBold)
     }
     
     internal static func light_font(size:CGFloat) -> UIFont{
         return .systemFont(ofSize: size, weight: UIFontWeightThin)
+    }
+    
+    internal static func heavy_font(size:CGFloat) -> UIFont{
+        return .systemFont(ofSize: size, weight: UIFontWeightHeavy)
     }
 }
