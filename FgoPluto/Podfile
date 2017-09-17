@@ -10,8 +10,8 @@ target 'FgoPluto' do
   pod 'SnapKit', '~> 3.2.0'
   pod 'Alamofire', '~> 4.4'
   pod 'PromiseKit', '~> 4.0'
-  pod 'BouncyLayout', '~> 1.0.0'
-  
+  pod 'RealmSwift', '2.10.1' 
+ 
   target 'FgoPlutoTests' do
     inherit! :search_paths
     # Pods for testing

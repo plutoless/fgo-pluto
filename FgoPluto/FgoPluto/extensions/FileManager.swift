@@ -1,5 +1,5 @@
 //
-//  BaseObject.swift
+//  FileManager.swift
 //  FgoPluto
 //
 //  Created by Zhang, Qianze on 17/09/2017.
@@ -7,12 +7,8 @@
 //
 
 import Foundation
-import RealmSwift
-import Realm
 
-class BaseObject : Object{
-    internal func fillvalues(data:[String:AnyObject]){
-        
-    }
+extension FileManager
+{
     
 }

@@ -201,6 +201,10 @@
 		0D6935D81F6DC19D00E4B8AF /* servant-177.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0D6935251F6DC19D00E4B8AF /* servant-177.jpg */; };
 		0D6935D91F6DC19D00E4B8AF /* servant-178.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0D6935261F6DC19D00E4B8AF /* servant-178.jpg */; };
 		0D6935DA1F6DC19D00E4B8AF /* servant-179.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0D6935271F6DC19D00E4B8AF /* servant-179.jpg */; };
+		0D6935DC1F6E707300E4B8AF /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6935DB1F6E707300E4B8AF /* String.swift */; };
+		0D6935DE1F6E7CEE00E4B8AF /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6935DD1F6E7CEE00E4B8AF /* FileManager.swift */; };
+		0D6935E11F6E7DA500E4B8AF /* default.realm in Resources */ = {isa = PBXBuildFile; fileRef = 0D6935E01F6E7DA500E4B8AF /* default.realm */; };
+		0D6935E31F6E921300E4B8AF /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6935E21F6E921300E4B8AF /* Material.swift */; };
 		0D762D661F6CF45B00C3E8BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D651F6CF45B00C3E8BF /* AppDelegate.swift */; };
 		0D762D6D1F6CF45B00C3E8BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D762D6C1F6CF45B00C3E8BF /* Assets.xcassets */; };
 		0D762D701F6CF45B00C3E8BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D762D6E1F6CF45B00C3E8BF /* LaunchScreen.storyboard */; };
@@ -428,6 +432,10 @@
 		0D6935251F6DC19D00E4B8AF /* servant-177.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "servant-177.jpg"; sourceTree = "<group>"; };
 		0D6935261F6DC19D00E4B8AF /* servant-178.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "servant-178.jpg"; sourceTree = "<group>"; };
 		0D6935271F6DC19D00E4B8AF /* servant-179.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "servant-179.jpg"; sourceTree = "<group>"; };
+		0D6935DB1F6E707300E4B8AF /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		0D6935DD1F6E7CEE00E4B8AF /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		0D6935E01F6E7DA500E4B8AF /* default.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = default.realm; sourceTree = "<group>"; };
+		0D6935E21F6E921300E4B8AF /* Material.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
 		0D762D621F6CF45B00C3E8BF /* FgoPluto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FgoPluto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D762D651F6CF45B00C3E8BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D762D6C1F6CF45B00C3E8BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -485,6 +493,8 @@
 				0D692EB91F6D4EE500E4B8AF /* UIColor.swift */,
 				0D311D221F6D383900E07B10 /* Font.swift */,
 				0D311D301F6D4A9800E07B10 /* UIImage.swift */,
+				0D6935DB1F6E707300E4B8AF /* String.swift */,
+				0D6935DD1F6E7CEE00E4B8AF /* FileManager.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -492,6 +502,7 @@
 		0D311D281F6D3E0500E07B10 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				0D6935DF1F6E7DA500E4B8AF /* db */,
 				0D6934741F6DC19D00E4B8AF /* servant_images */,
 				0D6930311F6D911F00E4B8AF /* scripts */,
 				0D311D291F6D3E0500E07B10 /* images */,
@@ -532,6 +543,7 @@
 				0D6930351F6D918100E4B8AF /* ChaldeaManager.swift */,
 				0D6930371F6D99C400E4B8AF /* Servant.swift */,
 				0D6930391F6D99D200E4B8AF /* BaseObject.swift */,
+				0D6935E21F6E921300E4B8AF /* Material.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -720,6 +732,14 @@
 				0D6935271F6DC19D00E4B8AF /* servant-179.jpg */,
 			);
 			path = servant_images;
+			sourceTree = "<group>";
+		};
+		0D6935DF1F6E7DA500E4B8AF /* db */ = {
+			isa = PBXGroup;
+			children = (
+				0D6935E01F6E7DA500E4B8AF /* default.realm */,
+			);
+			path = db;
 			sourceTree = "<group>";
 		};
 		0D762D591F6CF45B00C3E8BF = {
@@ -1045,6 +1065,7 @@
 				0D6935461F6DC19D00E4B8AF /* servant-031.jpg in Resources */,
 				0D6935891F6DC19D00E4B8AF /* servant-098.jpg in Resources */,
 				0D311D2B1F6D3E0500E07B10 /* menu_plan@2x.png in Resources */,
+				0D6935E11F6E7DA500E4B8AF /* default.realm in Resources */,
 				0D6935651F6DC19D00E4B8AF /* servant-062.jpg in Resources */,
 				0D69354B1F6DC19D00E4B8AF /* servant-036.jpg in Resources */,
 				0D6935561F6DC19D00E4B8AF /* servant-047.jpg in Resources */,
@@ -1294,11 +1315,14 @@
 				0D6930361F6D918100E4B8AF /* ChaldeaManager.swift in Sources */,
 				0D311D231F6D383900E07B10 /* Font.swift in Sources */,
 				0D692EC11F6D638800E4B8AF /* NavigationBar.swift in Sources */,
+				0D6935DE1F6E7CEE00E4B8AF /* FileManager.swift in Sources */,
 				0D692EBA1F6D4EE500E4B8AF /* UIColor.swift in Sources */,
 				0D762D961F6CF4EC00C3E8BF /* NavigationController.swift in Sources */,
+				0D6935E31F6E921300E4B8AF /* Material.swift in Sources */,
 				0D311D201F6D24EA00E07B10 /* BaseView.swift in Sources */,
 				0D762D9A1F6CF67E00C3E8BF /* BaseVC.swift in Sources */,
 				0D69303A1F6D99D200E4B8AF /* BaseObject.swift in Sources */,
+				0D6935DC1F6E707300E4B8AF /* String.swift in Sources */,
 				0D6930381F6D99C400E4B8AF /* Servant.swift in Sources */,
 				0D311D1E1F6D23FD00E07B10 /* TabBar.swift in Sources */,
 			);

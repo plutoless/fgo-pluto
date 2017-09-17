@@ -27,6 +27,7 @@ class ServantMgmtSectionVM : BaseVM
 {
     internal var cells:[ServantMgmtCellVM] = []
     internal var kind:String = ""
+    internal var kind_number:Int = -1
     
     convenience init(kind:String){
         self.init()
@@ -42,10 +43,12 @@ class ServantMgmtVM : BaseVM
     override init(){
         super.init()
         
-        let servantsMap:[String:[Servant]] = ChaldeaManager.sharedInstance.servantsByClass()
+        let servantsMap:[Int:[Servant]] = ChaldeaManager.sharedInstance.servantsByClass()
         
-        for kind:String in servantsMap.keys{
+        for kind:Int in servantsMap.keys{
             let section = ServantMgmtSectionVM()
+            section.kind = Servant.kind_name(kind: kind)
+            section.kind_number = kind
             guard let servants = servantsMap[kind] else {continue}
             for servant:Servant in servants{
                 section.cells.append(ServantMgmtCellVM(servant: servant))
@@ -53,9 +56,39 @@ class ServantMgmtVM : BaseVM
             sections.append(section)
         }
         
+        sections.sort { (vm1, vm2) -> Bool in
+            return vm1.kind_number < vm2.kind_number
+        }
     }
 }
 
+
+class ServantMgmtHeader : UICollectionReusableView
+{
+    lazy var kindlabel:UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = .light_font(size: 13)
+        label.textColor = UIColor(hex: "#9E9E9E")
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.addSubview(self.kindlabel)
+        self.kindlabel.snp.makeConstraints { maker in
+            maker.top.equalToSuperview()
+            maker.bottom.equalToSuperview().inset(10)
+            maker.left.equalToSuperview()
+            maker.right.equalToSuperview()
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+}
 
 
 class ServantMgmtCell : UICollectionViewCell
@@ -98,7 +131,7 @@ class ServantMgmtCell : UICollectionViewCell
         self.addSubview(self.servant_skills_label)
         
         self.servant_image.snp.makeConstraints { maker in
-            maker.size.equalTo(CGSize(width: 64, height: 64))
+            maker.size.equalTo(CGSize(width: 64, height: 72))
             maker.top.equalToSuperview()
             maker.centerX.equalToSuperview()
         }
@@ -125,6 +158,7 @@ class ServantMgmtCell : UICollectionViewCell
 class ServantMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
 {
     static let REUSE_IDENTIFIER:String = "ServantMgmtCell"
+    static let HEADER_REUSE_IDENTIFIER:String = "ServantMgmtHeader"
     
     lazy var servantCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -133,10 +167,12 @@ class ServantMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         layout.itemSize = CGSize(width: 68, height: 100)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = .white
-        collection.register(ServantMgmtCell.classForCoder(), forCellWithReuseIdentifier: ServantMgmtVC.REUSE_IDENTIFIER)
+        collection.register(ServantMgmtCell.self, forCellWithReuseIdentifier: ServantMgmtVC.REUSE_IDENTIFIER)
+        collection.register(ServantMgmtHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: HEADER_REUSE_IDENTIFIER)
         collection.delegate = self
         collection.dataSource = self
         collection.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
+        layout.headerReferenceSize = CGSize(width: collection.frame.size.width, height: 64);
         return collection
     }()
 }
@@ -184,5 +220,25 @@ extension ServantMgmtVC{
         let sections:[ServantMgmtSectionVM] = viewModel.sections
         let cells:[ServantMgmtCellVM] = sections[section].cells
         return cells.count
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        //1
+        switch kind {
+        //2
+        case UICollectionElementKindSectionHeader:
+            //3
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                             withReuseIdentifier: ServantMgmtVC.HEADER_REUSE_IDENTIFIER,
+                                                                             for: indexPath) as? ServantMgmtHeader ?? ServantMgmtHeader(frame: .zero)
+            let viewModel:ServantMgmtVM = self.viewModel as? ServantMgmtVM ?? ServantMgmtVM()
+            let sections:[ServantMgmtSectionVM] = viewModel.sections
+            headerView.kindlabel.text = sections[indexPath.section].kind
+            return headerView
+        default:
+            break
+        }
+        return UICollectionReusableView(frame:.zero)
     }
 }

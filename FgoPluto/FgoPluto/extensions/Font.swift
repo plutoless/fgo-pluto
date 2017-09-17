@@ -21,4 +21,8 @@ extension UIFont{
     internal static func bold_font(size:CGFloat) -> UIFont{
         return .boldSystemFont(ofSize: size)
     }
+    
+    internal static func light_font(size:CGFloat) -> UIFont{
+        return .systemFont(ofSize: size, weight: UIFontWeightThin)
+    }
 }

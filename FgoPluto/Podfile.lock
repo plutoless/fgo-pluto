@@ -1,6 +1,5 @@
 PODS:
   - Alamofire (4.4.0)
-  - BouncyLayout (1.0.1)
   - PromiseKit (4.2.2):
     - PromiseKit/Foundation (= 4.2.2)
     - PromiseKit/QuartzCore (= 4.2.2)
@@ -12,20 +11,26 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.2.2):
     - PromiseKit/CorePromise
+  - Realm (2.10.1):
+    - Realm/Headers (= 2.10.1)
+  - Realm/Headers (2.10.1)
+  - RealmSwift (2.10.1):
+    - Realm (= 2.10.1)
   - SnapKit (3.2.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
-  - BouncyLayout (~> 1.0.0)
   - PromiseKit (~> 4.0)
+  - RealmSwift (= 2.10.1)
   - SnapKit (~> 3.2.0)
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
-  BouncyLayout: ffdf9ca5826241670a6432a762627b473f4ddbb2
   PromiseKit: 00e8886881f151c7e573d06b437915b0bb2970ec
+  Realm: fc7a317a5c2c9ba91f5f235ede4e2ea76e9eba0c
+  RealmSwift: 505ed6c15942a2e76f5cfa78a8667cfa997ee75b
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 480e2ec52bd713bbaffdfd9408c751130e65b249
+PODFILE CHECKSUM: 1f22b1e00536a26ed7bd9c1925af644d22bf199a
 
 COCOAPODS: 1.2.1
