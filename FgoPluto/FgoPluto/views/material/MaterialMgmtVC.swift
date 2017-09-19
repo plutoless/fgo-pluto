@@ -9,16 +9,27 @@
 import Foundation
 import UIKit
 import SnapKit
+import RealmSwift
+import Realm
 
 class MaterialMgmtCellVM : BaseVM
 {
+    internal var material:Material?
     internal var material_image:UIImage?
-    internal var material_number:Int64 = 0
+    internal var material_number:Int64 = 0{
+        willSet{
+            if let realm = try? Realm(){
+                try? realm.write {
+                    self.material?.quantity = newValue
+                }
+            }
+        }
+    }
     
     
     convenience init(material:Material) {
         self.init()
-        
+        self.material = material
         self.material_image = material.image?.imageScaled(width: 64)
         self.material_number = material.quantity
     }
