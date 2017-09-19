@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class MaterialMgmtCellVM : BaseVM
 {
@@ -20,6 +21,37 @@ class MaterialMgmtCellVM : BaseVM
         
         self.material_image = material.image?.imageScaled(width: 64)
         self.material_number = material.quantity
+    }
+    
+    func formattedNumber() -> String{
+        let input = Double(self.material_number)
+        var output = input
+        
+        if(input >= 1*pow(10, 12)){
+            output = input / (1*pow(10, 12))
+        } else if(input >= 1*pow(10, 8)){
+            output = input / (1*pow(10, 8))
+        } else if(input >= 1*pow(10, 4)){
+            output = input / (1*pow(10, 4))
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 2
+        formatter.numberStyle = .decimal
+        return formatter.string(from: NSNumber(value: output)) ?? "\(self.material_number)"
+    }
+    
+    func formattedUnit() -> String{
+        let input = Double(self.material_number)
+        
+        if(input >= 1*pow(10, 12)){
+            return "万亿"
+        } else if(input >= 1*pow(10, 8)){
+            return "亿"
+        } else if(input >= 1*pow(10, 4)){
+            return "万"
+        }
+        return "个"
     }
 }
 
@@ -91,8 +123,9 @@ class MaterialMgmtHeader : UICollectionReusableView
 }
 
 
-class MaterialMgmtCell : UICollectionViewCell
+class MaterialMgmtCell : UICollectionViewCell, UITextFieldDelegate
 {
+    weak var current_first_responder:UITextField?
     lazy var material_image:UIImageView = {
         let view = UIImageView()
         view.contentMode = .top
@@ -100,19 +133,29 @@ class MaterialMgmtCell : UICollectionViewCell
         return view
     }()
     
-    lazy var material_number_label:UILabel = {
-        let label = UILabel()
+    lazy var material_number_label:UITextField = {
+        let label = UITextField()
         label.textAlignment = .right
         label.font = .font(size: 11)
         label.textColor = UIColor(hex: "#A4A4A4")
+        label.keyboardType = .numberPad
+        label.delegate = self
+        label.textAlignment = .right
+        
+        let toolbar = UIToolbar()
+        label.inputAccessoryView = toolbar
+        var spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        var doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(MaterialMgmtCell.donePressed))
+        toolbar.setItems([spaceButton, doneButton], animated: false)
+        toolbar.sizeToFit()
+        
         return label
     }()
     
-    lazy var holding_label:UILabel = {
+    lazy var unit_number_label:UILabel = {
         let label = UILabel()
-        label.textAlignment = .left
+        label.textAlignment = .right
         label.font = .font(size: 11)
-        label.text = "持有"
         label.textColor = UIColor(hex: "#A4A4A4")
         return label
     }()
@@ -121,7 +164,8 @@ class MaterialMgmtCell : UICollectionViewCell
         willSet{
             guard let vm:MaterialMgmtCellVM = newValue else {return}
             self.material_image.image = vm.material_image
-            self.material_number_label.text = "\(vm.material_number)个"
+            self.material_number_label.text = "\(vm.formattedNumber())"
+            self.unit_number_label.text = "\(vm.formattedUnit())"
         }
     }
     
@@ -130,7 +174,7 @@ class MaterialMgmtCell : UICollectionViewCell
         
         self.addSubview(self.material_image)
         self.addSubview(self.material_number_label)
-        self.addSubview(self.holding_label)
+        self.addSubview(self.unit_number_label)
         
         self.material_image.snp.makeConstraints { maker in
             maker.size.equalTo(CGSize(width: 64, height: 72))
@@ -140,19 +184,49 @@ class MaterialMgmtCell : UICollectionViewCell
         
         self.material_number_label.snp.makeConstraints {[weak self] maker in
             guard let weakself = self else {return}
-            maker.right.equalTo(weakself.material_image.snp.right)
-            maker.bottom.equalToSuperview().inset(5)
+            maker.bottom.equalTo(weakself.unit_number_label)
+            maker.right.equalTo(weakself.unit_number_label.snp.left)
+            maker.left.equalTo(weakself.material_image.snp.left)
         }
         
-        self.holding_label.snp.makeConstraints {[weak self] maker in
+        self.unit_number_label.snp.makeConstraints {[weak self] maker in
             guard let weakself = self else {return}
-            maker.left.equalTo(weakself.material_image.snp.left)
-            maker.bottom.equalTo(weakself.material_number_label.snp.bottom)
+            maker.right.equalTo(weakself.material_image.snp.right)
+            maker.bottom.equalToSuperview().inset(5)
+            maker.width.equalTo(10)
         }
+        
+        self.unit_number_label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    
+    func donePressed(){
+        current_first_responder?.resignFirstResponder()
+    }
+}
+
+extension MaterialMgmtCell
+{
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        guard let viewModel = self.viewModel else {return}
+        textField.text = "\(viewModel.material_number)"
+        current_first_responder = textField
+        textField.selectAll(nil)
+    }
+    
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let text = textField.text
+        
+        if let trimmed = text?.trimmingCharacters(in: CharacterSet.decimalDigits.inverted), let number = Int64(trimmed), let viewModel = self.viewModel{
+            viewModel.material_number = number
+            //update viewmodel
+            self.viewModel = viewModel
+        }
     }
 }
 
@@ -186,6 +260,14 @@ class MaterialMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSou
         btn.addTarget(self, action: #selector(onImport), for: .touchUpInside)
         return btn
     }()
+    
+    var collection_bottom_constraint:Constraint?
+    
+    
+    internal override func viewDidLoad() {
+        super.viewDidLoad()
+        self.registerForKeyboardNotifications()
+    }
 }
 
 extension MaterialMgmtVC{
@@ -199,11 +281,12 @@ extension MaterialMgmtVC{
     }
     
     internal override func set_constraints() {
-        self.materialCollection.snp.makeConstraints { maker in
+        self.materialCollection.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
             maker.left.equalToSuperview()
             maker.right.equalToSuperview()
-            maker.top.equalTo(self.navigationBar.snp.bottom)
-            maker.bottom.equalToSuperview()
+            maker.top.equalTo(weakself.navigationBar.snp.bottom)
+            weakself.collection_bottom_constraint = maker.bottom.equalTo(weakself.view).inset(0).constraint
         }
     }
     
@@ -213,6 +296,43 @@ extension MaterialMgmtVC{
     
     internal func onImport() {
         let _ = ChaldeaManager.sharedInstance.decode_data()
+    }
+    
+    internal func registerForKeyboardNotifications(){
+        NotificationCenter.default.addObserver(self, selector: #selector(MaterialMgmtVC.keyboardWillShow(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MaterialMgmtVC.keyboardWillHide(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func keyboardWillShow(_ notification:Notification){
+        if let info = notification.userInfo,
+            let kb_size = (info[UIKeyboardFrameEndUserInfoKey] as? CGRect)?.size,
+            let duration = info[UIKeyboardAnimationDurationUserInfoKey] as? Double,
+            let curve = info[UIKeyboardAnimationCurveUserInfoKey] as? UInt {
+            
+            if let constraint = self.collection_bottom_constraint{
+                constraint.update(inset: (kb_size.height - 56))
+                
+                UIView.animate(withDuration: duration, delay: 0.0, options: UIViewAnimationOptions(rawValue: curve), animations: {[weak self] _ in
+                    self?.view.layoutIfNeeded()
+                }, completion:nil)
+            }
+            
+        }
+    }
+    
+    func keyboardWillHide(_ notification:Notification){
+        if let info = notification.userInfo,
+            let duration = info[UIKeyboardAnimationDurationUserInfoKey] as? Double,
+            let curve = info[UIKeyboardAnimationCurveUserInfoKey] as? UInt {
+            
+            if let constraint = self.collection_bottom_constraint{
+                constraint.update(inset: 0)
+                UIView.animate(withDuration: duration, delay: 0.0, options: UIViewAnimationOptions(rawValue: curve), animations: {[weak self] _ in
+                    self?.view.layoutIfNeeded()
+                }, completion:nil)
+            }
+            
+        }
     }
 }
 
@@ -238,6 +358,10 @@ extension MaterialMgmtVC{
         return cells.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell:MaterialMgmtCell = collectionView.cellForItem(at: indexPath) as? MaterialMgmtCell else {return}
+        cell.material_number_label.becomeFirstResponder()
+    }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         //1

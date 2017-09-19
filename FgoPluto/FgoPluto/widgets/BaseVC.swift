@@ -57,8 +57,8 @@ class BaseVC : UIViewController{
         
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         self.set_constraints()
     }
 }
