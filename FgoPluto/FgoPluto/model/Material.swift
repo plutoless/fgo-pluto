@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class Material:BaseObject
 {
@@ -23,8 +24,8 @@ class Material:BaseObject
         return UIImage(named: "material-\(self.id).jpg")
     }()
     
-    override func fillvalues(data: [String : AnyObject]) {
-        super.fillvalues(data: data)
+    override func fillvalues(realm: Realm, data: [String : AnyObject]) {
+        super.fillvalues(realm: realm, data: data)
         guard let id = Int(data["id"] as? String ?? "0") else {return}
         self.id = id
     }

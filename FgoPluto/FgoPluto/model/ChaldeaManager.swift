@@ -83,9 +83,7 @@ class ChaldeaManager: NSObject
         
         //load default db
         self.prepareDefaultDB(target_url: db_url)
-        
-        
-//        self.prepareDataFromJS()
+        self.prepareDataFromJS()
     }
     
     private func prepareDefaultDB(target_url:URL){
@@ -97,11 +95,13 @@ class ChaldeaManager: NSObject
         
         do {
             let realm = try Realm()
-            realm.objects(Servant.self).forEach({ servant in
-                self.servants.append(servant)
-            })
+            //materials must be written first
             realm.objects(Material.self).forEach({ material in
                 self.materials.append(material)
+            })
+            //as servants have dependencies on materials
+            realm.objects(Servant.self).forEach({ servant in
+                self.servants.append(servant)
             })
             
             self.materials.sort { (m1, m2) -> Bool in
@@ -119,33 +119,33 @@ class ChaldeaManager: NSObject
         let _ = jscontext?.evaluateScript(script)
         
         let servants_array:[[String:AnyObject]] = jscontext?.objectForKeyedSubscript("Servantdb").toArray() as? [[String:AnyObject]] ?? []
-        let materials_map:[String:Int] = jscontext?.objectForKeyedSubscript("mTotalNum").toDictionary() as? [String:Int] ?? [:]
-        
-        for item:[String:AnyObject] in servants_array{
-            let servant = Servant()
-            servant.fillvalues(data: item)
-            
-            if (servant.id == 152) {
-                continue
-            }
-            self.servants.append(servant)
-        }
+//        let materials_map:[String:Int] = jscontext?.objectForKeyedSubscript("mTotalNum").toDictionary() as? [String:Int] ?? [:]
         
         
-        
-        for item_id:String in materials_map.keys{
-            let material = Material()
-            guard let id = Int(item_id) else {continue}
-            material.id = id
-            self.materials.append(material)
-        }
         
         do {
             let realm = try Realm()
-            try? realm.write {
-                realm.deleteAll()
-                realm.add(self.servants)
-                realm.add(self.materials)
+            try realm.write {
+                realm.delete(realm.objects(Servant.self))
+//                for item_id:String in materials_map.keys{
+//                    let material = Material()
+//                    guard let id = Int(item_id) else {continue}
+//                    material.id = id
+//                    self.materials.append(material)
+//                }
+//                realm.add(self.materials)
+                
+                
+                for item:[String:AnyObject] in servants_array{
+                    let servant = Servant()
+                    servant.fillvalues(realm: realm, data: item)
+                    
+                    if (servant.id == 152) {
+                        continue
+                    }
+                    self.servants.append(servant)
+                    realm.add(servant)
+                }
             }
         } catch {
             print(error)

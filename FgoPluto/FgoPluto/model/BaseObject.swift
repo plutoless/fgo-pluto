@@ -11,7 +11,7 @@ import RealmSwift
 import Realm
 
 class BaseObject : Object{
-    internal func fillvalues(data:[String:AnyObject]){
+    internal func fillvalues(realm:Realm, data:[String:AnyObject]){
         
     }
     
