@@ -14,6 +14,7 @@
 		0D311D2E1F6D3F8800E07B10 /* menu_item@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D311D2C1F6D3F8800E07B10 /* menu_item@2x.png */; };
 		0D311D2F1F6D3F8800E07B10 /* menu_servant@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D311D2D1F6D3F8800E07B10 /* menu_servant@2x.png */; };
 		0D311D311F6D4A9800E07B10 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D311D301F6D4A9800E07B10 /* UIImage.swift */; };
+		0D3A2E181F73AC6C004BCACA /* ServantEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A2E171F73AC6C004BCACA /* ServantEditor.swift */; };
 		0D692EBA1F6D4EE500E4B8AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D692EB91F6D4EE500E4B8AF /* UIColor.swift */; };
 		0D692EBC1F6D512D00E4B8AF /* toolbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D692EBB1F6D512D00E4B8AF /* toolbar_bg@2x.png */; };
 		0D692EBF1F6D5D3300E4B8AF /* ServantMgmtVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D692EBE1F6D5D3300E4B8AF /* ServantMgmtVC.swift */; };
@@ -309,6 +310,7 @@
 		0D311D2C1F6D3F8800E07B10 /* menu_item@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_item@2x.png"; sourceTree = "<group>"; };
 		0D311D2D1F6D3F8800E07B10 /* menu_servant@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_servant@2x.png"; sourceTree = "<group>"; };
 		0D311D301F6D4A9800E07B10 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		0D3A2E171F73AC6C004BCACA /* ServantEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServantEditor.swift; sourceTree = "<group>"; };
 		0D692EB91F6D4EE500E4B8AF /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		0D692EBB1F6D512D00E4B8AF /* toolbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar_bg@2x.png"; sourceTree = "<group>"; };
 		0D692EBE1F6D5D3300E4B8AF /* ServantMgmtVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServantMgmtVC.swift; sourceTree = "<group>"; };
@@ -655,6 +657,7 @@
 			isa = PBXGroup;
 			children = (
 				0D692EBE1F6D5D3300E4B8AF /* ServantMgmtVC.swift */,
+				0D3A2E171F73AC6C004BCACA /* ServantEditor.swift */,
 			);
 			path = servant;
 			sourceTree = "<group>";
@@ -1586,6 +1589,7 @@
 				0D6930361F6D918100E4B8AF /* ChaldeaManager.swift in Sources */,
 				0D311D231F6D383900E07B10 /* Font.swift in Sources */,
 				0D692EC11F6D638800E4B8AF /* NavigationBar.swift in Sources */,
+				0D3A2E181F73AC6C004BCACA /* ServantEditor.swift in Sources */,
 				0D6935DE1F6E7CEE00E4B8AF /* FileManager.swift in Sources */,
 				0D692EBA1F6D4EE500E4B8AF /* UIColor.swift in Sources */,
 				0D762D961F6CF4EC00C3E8BF /* NavigationController.swift in Sources */,

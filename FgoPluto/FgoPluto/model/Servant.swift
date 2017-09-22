@@ -16,6 +16,11 @@ class Servant : BaseObject
     dynamic var text:String = ""
     dynamic var kind:Int = -1
     dynamic var rank:Int = -1
+    dynamic var ad_level:Int = 0
+    dynamic var skill1_level:Int = 0
+    dynamic var skill2_level:Int = 0
+    dynamic var skill3_level:Int = 0
+    
     dynamic lazy var image:UIImage? = {
         return UIImage(named: "servant-\(String(format:"%03d", self.id)).jpg")
     }()
@@ -39,6 +44,10 @@ class Servant : BaseObject
     
     override static func indexedProperties() -> [String] {
         return ["id"]
+    }
+    
+    override static func primaryKey() -> String? {
+        return "id"
     }
     
     override func fillvalues(realm: Realm, data: [String : AnyObject]) {

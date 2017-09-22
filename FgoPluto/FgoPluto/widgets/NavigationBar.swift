@@ -12,8 +12,15 @@ import UIKit
 class NavigationBar:BaseView{
     lazy var titleLabel:UILabel = {
         let label = UILabel()
-        label.font = .bold_font(size: 18)
+        label.font = .med_font(size: 16)
+        label.textColor = self.tintColor
         return label
+    }()
+    
+    lazy var bottom_line:UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(hex: "#DCDCDC")
+        return view
     }()
     
     var leftBarItems:[UIView] = [] {
@@ -24,6 +31,7 @@ class NavigationBar:BaseView{
             
             for i in 0..<newValue.count{
                 let item = newValue[i]
+                item.tintColor = self.tintColor
                 self.addSubview(item)
                 
                 item.snp.makeConstraints({ maker in
@@ -47,6 +55,7 @@ class NavigationBar:BaseView{
             
             for i in 0..<newValue.count{
                 let item = newValue[i]
+                item.tintColor = self.tintColor
                 self.addSubview(item)
                 
                 item.snp.makeConstraints({ maker in
@@ -66,11 +75,20 @@ class NavigationBar:BaseView{
     
     override func create_contents() {
         super.create_contents()
+        self.tintColor = UIColor(hex: "#474747")
+        self.addSubview(self.bottom_line)
         self.addSubview(self.titleLabel)
     }
     
     override func set_constraints() {
         super.set_constraints()
+        
+        self.bottom_line.snp.makeConstraints { maker in
+            maker.bottom.equalToSuperview()
+            maker.left.equalToSuperview()
+            maker.right.equalToSuperview()
+            maker.height.equalTo(0.5)
+        }
         
         self.titleLabel.snp.makeConstraints { maker in
             maker.bottom.equalToSuperview()

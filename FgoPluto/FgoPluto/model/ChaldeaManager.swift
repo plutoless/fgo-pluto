@@ -119,7 +119,6 @@ class ChaldeaManager: NSObject
         let _ = jscontext?.evaluateScript(script)
         
         let servants_array:[[String:AnyObject]] = jscontext?.objectForKeyedSubscript("Servantdb").toArray() as? [[String:AnyObject]] ?? []
-//        let materials_map:[String:Int] = jscontext?.objectForKeyedSubscript("mTotalNum").toDictionary() as? [String:Int] ?? [:]
         
         
         
@@ -127,15 +126,8 @@ class ChaldeaManager: NSObject
             let realm = try Realm()
             try realm.write {
                 realm.delete(realm.objects(Servant.self))
-//                for item_id:String in materials_map.keys{
-//                    let material = Material()
-//                    guard let id = Int(item_id) else {continue}
-//                    material.id = id
-//                    self.materials.append(material)
-//                }
-//                realm.add(self.materials)
                 
-                
+                self.servants = []
                 for item:[String:AnyObject] in servants_array{
                     let servant = Servant()
                     servant.fillvalues(realm: realm, data: item)
@@ -180,7 +172,7 @@ class ChaldeaManager: NSObject
         return results;
     }
     
-    internal func encode_data() -> String{
+    internal func encode_item_data() -> String{
 //        var d = "*c", e = "*b", c = "*s", b = "*g", a = ""
 //        
 //        do {
@@ -195,7 +187,59 @@ class ChaldeaManager: NSObject
         return ""
     }
     
-    internal func decode_data(){
+    internal func decode_servant_data(){
+        var code:String = "#08wxzh13awssf13dexs9p"
+        
+        do {
+            let realm = try Realm()
+            let initial = code.substringWithRange(lowerBound: 0, length: 1)
+            
+            if(initial != "#"){
+                //improper
+            } else {
+                code = code.substringWithRange(lowerBound: 1, length: code.characters.count - 1)
+                if(code.characters.count % 7 != 0){
+                    //improper
+                } else {
+                    for i in 0..<code.characters.count / 7{
+                        let piece = code.substringWithRange(lowerBound: i*7, length: 7)
+                        let servant_source = piece.substringWithRange(lowerBound: 0, length: 2)
+                        let servant_code:Int = strtol(servant_source, nil, 36)
+                        guard let servant:Servant = realm.object(ofType: Servant.self, forPrimaryKey: servant_code) else {print("Servant \(servant_code) not found"); continue}
+                        
+                        let data_source = piece.substringWithRange(lowerBound: 2, length: 5)
+                        let data_code:Int64 = strtoll(data_source, nil, 36)
+                        let parsed_data_source = "\(data_code)"
+                        
+                        if(parsed_data_source.characters.count != 8){
+                            //improper
+                        } else {
+                            let ad_from = Int(parsed_data_source.substringWithRange(lowerBound: 0, length: 1)) ?? 0
+    //                        let ad_to = Int(parsed_data_source.substringWithRange(lowerBound: 1, length: 1)) ?? 4
+                            let skill1_from = Int(parsed_data_source.substringWithRange(lowerBound: 2, length: 1)) ?? 0
+    //                        let skill1_to = Int(parsed_data_source.substringWithRange(lowerBound: 3, length: 1)) ?? 10
+                            let skill2_from = Int(parsed_data_source.substringWithRange(lowerBound: 4, length: 1)) ?? 0
+    //                        let skill2_to = Int(parsed_data_source.substringWithRange(lowerBound: 5, length: 1)) ?? 10
+                            let skill3_from = Int(parsed_data_source.substringWithRange(lowerBound: 6, length: 1)) ?? 0
+    //                        let skill3_to = Int(parsed_data_source.substringWithRange(lowerBound: 7, length: 1)) ?? 10
+                            
+                            try realm.write {
+                                servant.ad_level = ad_from - 1
+                                servant.skill1_level = skill1_from
+                                servant.skill2_level = skill2_from
+                                servant.skill3_level = skill3_from
+                            }
+                        }
+                    }
+                }
+            }
+        }catch{
+            print(error)
+        }
+    }
+    
+    
+    internal func decode_item_data(){
         let code:String = "*c03a78j000a000o0008000z001k000e001u000z000b0007000j0018000h001w0012001h001f0016000k00080012000d001q00230014000s001x000n003c000a0001000l0004000s0004001h*b0047001d006i002t000l00000000*s0008000u000m000q001q000r000o001z0009000h0000*g000e000s001y001200180012001500090006000000000000"
         
         guard let realm = try? Realm() else {return}

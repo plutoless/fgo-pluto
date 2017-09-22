@@ -22,6 +22,10 @@ extension UIFont{
         return .systemFont(ofSize: size, weight: UIFontWeightBold)
     }
     
+    internal static func med_font(size:CGFloat) -> UIFont{
+        return .systemFont(ofSize: size, weight: UIFontWeightMedium)
+    }
+    
     internal static func light_font(size:CGFloat) -> UIFont{
         return .systemFont(ofSize: size, weight: UIFontWeightThin)
     }

@@ -156,7 +156,7 @@ class MaterialMgmtCell : UICollectionViewCell, UITextFieldDelegate
         let toolbar = UIToolbar()
         label.inputAccessoryView = toolbar
         var spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        var doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(MaterialMgmtCell.donePressed))
+        var doneButton = UIBarButtonItem(title: "完成", style: .done, target: self, action: #selector(MaterialMgmtCell.donePressed))
         toolbar.setItems([spaceButton, doneButton], animated: false)
         toolbar.sizeToFit()
         
@@ -258,16 +258,17 @@ class MaterialMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSou
         collection.register(MaterialMgmtHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: HEADER_REUSE_IDENTIFIER)
         collection.delegate = self
         collection.dataSource = self
-        collection.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
+        collection.contentInset = UIEdgeInsetsMake(15, 5, 0, 5)
         layout.headerReferenceSize = CGSize(width: collection.frame.size.width, height: 32);
         return collection
     }()
     
     lazy var import_btn:UIButton = {
         let btn = UIButton(type: .roundedRect)
-        let icon = UIImage.templateImage(name: "import", width: 44)
+        let icon = UIImage.templateImage(name: "import", width: 32)
         btn.setImage(icon, for: .normal)
-        btn.tintColor = UIColor(hex: "#252525")
+        btn.titleLabel?.font = .font(size: 14)
+        btn.tintColor = UIColor(hex: "#363636")
         btn.addTarget(self, action: #selector(onImport), for: .touchUpInside)
         return btn
     }()
@@ -306,7 +307,7 @@ extension MaterialMgmtVC{
     }
     
     internal func onImport() {
-        let _ = ChaldeaManager.sharedInstance.decode_data()
+        let _ = ChaldeaManager.sharedInstance.decode_item_data()
     }
     
     internal func registerForKeyboardNotifications(){

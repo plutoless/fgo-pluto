@@ -8,17 +8,30 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class ServantMgmtCellVM : BaseVM
 {
     internal var servant_image:UIImage?
-    internal var servant_evolve_level:Int = 0
-    internal var servant_skills_level:String = "10/6/8"
+    internal var servant_evolve_level:Int = 1
+    internal var servant_skill_1:Int = 1
+    internal var servant_skill_2:Int = 1
+    internal var servant_skill_3:Int = 1
+    internal var servant_id:Int = 0
     
     
     convenience init(servant:Servant) {
         self.init()
-        
+        self.fillServant(servant: servant)
+    }
+    
+    
+    func fillServant(servant:Servant){
+        self.servant_id = servant.id
+        self.servant_evolve_level = servant.ad_level
+        self.servant_skill_1 = servant.skill1_level
+        self.servant_skill_2 = servant.skill2_level
+        self.servant_skill_3 = servant.skill3_level
         self.servant_image = servant.image?.imageScaled(width: 64)
     }
 }
@@ -103,7 +116,7 @@ class ServantMgmtCell : UICollectionViewCell
     lazy var servant_evolve_label:UILabel = {
         let label = UILabel()
         label.font = .font(size: 12)
-        label.textColor = UIColor(hex: "#252525")
+        label.textColor = UIColor(hex: "#363636")
         return label
     }()
     
@@ -119,7 +132,7 @@ class ServantMgmtCell : UICollectionViewCell
             guard let vm:ServantMgmtCellVM = newValue else {return}
             self.servant_image.image = vm.servant_image
             self.servant_evolve_label.text = "灵基再临(\(vm.servant_evolve_level))"
-            self.servant_skills_label.text = vm.servant_skills_level
+            self.servant_skills_label.text = "\(vm.servant_skill_1 + 1)/\(vm.servant_skill_2 + 1)/\(vm.servant_skill_3 + 1)"
         }
     }
     
@@ -155,7 +168,7 @@ class ServantMgmtCell : UICollectionViewCell
 }
 
 
-class ServantMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
+class ServantMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, ServantEditDelegate
 {
     static let REUSE_IDENTIFIER:String = "ServantMgmtCell"
     static let HEADER_REUSE_IDENTIFIER:String = "ServantMgmtHeader"
@@ -175,6 +188,16 @@ class ServantMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         layout.headerReferenceSize = CGSize(width: collection.frame.size.width, height: 64);
         return collection
     }()
+    
+    lazy var import_btn:UIButton = {
+        let btn = UIButton(type: .roundedRect)
+        let icon = UIImage.templateImage(name: "import", width: 32)
+        btn.setImage(icon, for: .normal)
+        btn.titleLabel?.font = .font(size: 14)
+        btn.tintColor = UIColor(hex: "#363636")
+        btn.addTarget(self, action: #selector(onImport), for: .touchUpInside)
+        return btn
+    }()
 }
 
 extension ServantMgmtVC{
@@ -182,6 +205,7 @@ extension ServantMgmtVC{
         super.create_contents()
         
         self.title = "从者"
+        self.navigationBar.rightBarItems = [self.import_btn]
         
         self.view.addSubview(self.servantCollection)
     }
@@ -197,6 +221,10 @@ extension ServantMgmtVC{
     
     internal override func preferredNavigationBarHidden() -> Bool {
         return false
+    }
+    
+    internal func onImport() {
+        let _ = ChaldeaManager.sharedInstance.decode_servant_data()
     }
 }
 
@@ -222,6 +250,18 @@ extension ServantMgmtVC{
         return cells.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let viewModel:ServantMgmtVM = self.viewModel as? ServantMgmtVM else {return}
+        if let navVC:UINavigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController, let tabVC:MainTabVC = navVC.viewControllers[0] as? MainTabVC {
+            let sections:[ServantMgmtSectionVM] = viewModel.sections
+            let cells:[ServantMgmtCellVM] = sections[indexPath.section].cells
+            let cell:ServantMgmtCellVM = cells[indexPath.row]
+            let values = [cell.servant_evolve_level, cell.servant_skill_1 + 1, cell.servant_skill_2 + 1, cell.servant_skill_3 + 1]
+            let editor = ServantEditor.showFrom(parent:tabVC.view, values: values, servant_id: cell.servant_id, atIndexPath: indexPath)
+            editor.delegate = self
+        }
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         //1
@@ -240,5 +280,30 @@ extension ServantMgmtVC{
             break
         }
         return UICollectionReusableView(frame:.zero)
+    }
+}
+
+extension ServantMgmtVC
+{
+    func didFinishEdit(servant_id: Int, values: [Int], atIndexPath: IndexPath?) {
+        guard let viewModel:ServantMgmtVM = self.viewModel as? ServantMgmtVM, let indexPath:IndexPath = atIndexPath else {return}
+        do{
+            let realm = try Realm()
+            let sections:[ServantMgmtSectionVM] = viewModel.sections
+            let cells:[ServantMgmtCellVM] = sections[indexPath.section].cells
+            let cell:ServantMgmtCellVM = cells[indexPath.row]
+            if let servant = realm.object(ofType: Servant.self, forPrimaryKey: servant_id){
+                try realm.write {
+                    servant.ad_level = values[0]
+                    servant.skill1_level = values[1] - 1
+                    servant.skill2_level = values[2] - 1
+                    servant.skill3_level = values[3] - 1
+                }
+                cell.fillServant(servant: servant)
+                self.servantCollection.reloadItems(at: [indexPath])
+            }
+        }catch{
+            print(error)
+        }
     }
 }
