@@ -215,6 +215,8 @@
 		0D762D961F6CF4EC00C3E8BF /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D951F6CF4EC00C3E8BF /* NavigationController.swift */; };
 		0D762D981F6CF5EC00C3E8BF /* MainTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D971F6CF5EC00C3E8BF /* MainTabVC.swift */; };
 		0D762D9A1F6CF67E00C3E8BF /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D762D991F6CF67E00C3E8BF /* BaseVC.swift */; };
+		0D8B1C591F7555450016CD43 /* PlanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B1C581F7555450016CD43 /* PlanVC.swift */; };
+		0D8B1C5B1F76895A0016CD43 /* collection_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D8B1C5A1F76895A0016CD43 /* collection_bg@2x.png */; };
 		0DBAAD4E1F6EC7F2004C0B84 /* import@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAAD4D1F6EC7F2004C0B84 /* import@2x.png */; };
 		0DC084871F7132240068317B /* material-100.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DC084491F7132240068317B /* material-100.jpg */; };
 		0DC084881F7132240068317B /* material-101.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DC0844A1F7132240068317B /* material-101.jpg */; };
@@ -517,6 +519,8 @@
 		0D762D951F6CF4EC00C3E8BF /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		0D762D971F6CF5EC00C3E8BF /* MainTabVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabVC.swift; sourceTree = "<group>"; };
 		0D762D991F6CF67E00C3E8BF /* BaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
+		0D8B1C581F7555450016CD43 /* PlanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanVC.swift; sourceTree = "<group>"; };
+		0D8B1C5A1F76895A0016CD43 /* collection_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "collection_bg@2x.png"; sourceTree = "<group>"; };
 		0DBAAD4D1F6EC7F2004C0B84 /* import@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "import@2x.png"; sourceTree = "<group>"; };
 		0DC084491F7132240068317B /* material-100.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "material-100.jpg"; sourceTree = "<group>"; };
 		0DC0844A1F7132240068317B /* material-101.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "material-101.jpg"; sourceTree = "<group>"; };
@@ -644,6 +648,7 @@
 		0D311D291F6D3E0500E07B10 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0D8B1C5A1F76895A0016CD43 /* collection_bg@2x.png */,
 				0DBAAD4D1F6EC7F2004C0B84 /* import@2x.png */,
 				0D692EBB1F6D512D00E4B8AF /* toolbar_bg@2x.png */,
 				0D311D2C1F6D3F8800E07B10 /* menu_item@2x.png */,
@@ -942,6 +947,7 @@
 		0D762D931F6CF4EC00C3E8BF /* views */ = {
 			isa = PBXGroup;
 			children = (
+				0D8B1C571F75553B0016CD43 /* plan */,
 				0D6935E41F6EA9BB00E4B8AF /* material */,
 				0D692EBD1F6D5D1D00E4B8AF /* servant */,
 				0D762D971F6CF5EC00C3E8BF /* MainTabVC.swift */,
@@ -959,6 +965,14 @@
 				0D692EC01F6D638800E4B8AF /* NavigationBar.swift */,
 			);
 			path = widgets;
+			sourceTree = "<group>";
+		};
+		0D8B1C571F75553B0016CD43 /* plan */ = {
+			isa = PBXGroup;
+			children = (
+				0D8B1C581F7555450016CD43 /* PlanVC.swift */,
+			);
+			path = plan;
 			sourceTree = "<group>";
 		};
 		0DC084481F7132240068317B /* material_images */ = {
@@ -1174,6 +1188,7 @@
 				0DC084A11F7132240068317B /* material-215.jpg in Resources */,
 				0DC084881F7132240068317B /* material-101.jpg in Resources */,
 				0D311D2E1F6D3F8800E07B10 /* menu_item@2x.png in Resources */,
+				0D8B1C5B1F76895A0016CD43 /* collection_bg@2x.png in Resources */,
 				0D6935931F6DC19D00E4B8AF /* servant-108.jpg in Resources */,
 				0D6935D21F6DC19D00E4B8AF /* servant-171.jpg in Resources */,
 				0D69356C1F6DC19D00E4B8AF /* servant-069.jpg in Resources */,
@@ -1585,6 +1600,7 @@
 				0D762D661F6CF45B00C3E8BF /* AppDelegate.swift in Sources */,
 				0D311D311F6D4A9800E07B10 /* UIImage.swift in Sources */,
 				0D762D981F6CF5EC00C3E8BF /* MainTabVC.swift in Sources */,
+				0D8B1C591F7555450016CD43 /* PlanVC.swift in Sources */,
 				0D692EBF1F6D5D3300E4B8AF /* ServantMgmtVC.swift in Sources */,
 				0D6930361F6D918100E4B8AF /* ChaldeaManager.swift in Sources */,
 				0D311D231F6D383900E07B10 /* Font.swift in Sources */,

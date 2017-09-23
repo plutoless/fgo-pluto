@@ -106,6 +106,13 @@ class ServantMgmtHeader : UICollectionReusableView
 
 class ServantMgmtCell : UICollectionViewCell
 {
+    lazy var collection_bg:UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .center
+        view.image = UIImage(named: "collection_bg")
+        return view
+    }()
+    
     lazy var servant_image:UIImageView = {
         let view = UIImageView()
         view.contentMode = .top
@@ -139,13 +146,21 @@ class ServantMgmtCell : UICollectionViewCell
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.addSubview(self.collection_bg)
         self.addSubview(self.servant_image)
         self.addSubview(self.servant_evolve_label)
         self.addSubview(self.servant_skills_label)
         
+        self.collection_bg.snp.makeConstraints {maker in
+            maker.top.equalToSuperview()
+            maker.bottom.equalToSuperview()
+            maker.left.equalToSuperview()
+            maker.right.equalToSuperview()
+        }
+        
         self.servant_image.snp.makeConstraints { maker in
             maker.size.equalTo(CGSize(width: 64, height: 72))
-            maker.top.equalToSuperview()
+            maker.top.equalToSuperview().inset(10)
             maker.centerX.equalToSuperview()
         }
         
@@ -177,7 +192,7 @@ class ServantMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-        layout.itemSize = CGSize(width: 68, height: 110)
+        layout.itemSize = CGSize(width: 90, height: 120)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = .white
         collection.register(ServantMgmtCell.self, forCellWithReuseIdentifier: ServantMgmtVC.REUSE_IDENTIFIER)

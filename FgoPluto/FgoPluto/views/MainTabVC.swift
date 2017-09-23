@@ -45,6 +45,11 @@ extension MainTabVC
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.didSelectItem(idx: 0)
+    }
+    
     internal func switchToVC(to_vc:BaseVC){
         if let vc = self.currenct_vc{
             vc.removeFromParentViewController()
@@ -70,7 +75,11 @@ extension MainTabVC
 
 extension MainTabVC{
     internal func didSelectItem(idx: Int) {
-        if(idx == 1){
+        self.tabBar.items[idx].selected = true
+        if(idx == 0){
+            let vc = PlanVC(viewModel: BaseVM())
+            self.switchToVC(to_vc: vc)
+        } else if(idx == 1){
             let vc = ServantMgmtVC(viewModel: ServantMgmtVM())
             self.switchToVC(to_vc: vc)
         } else if(idx == 2){
