@@ -114,7 +114,7 @@ class ServantMgmtCell : UICollectionViewCell
     
     lazy var servant_image:UIImageView = {
         let view = UIImageView()
-        view.contentMode = .top
+        view.contentMode = .center
         view.clipsToBounds = true
         return view
     }()

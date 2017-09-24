@@ -30,7 +30,7 @@ class MaterialMgmtCellVM : BaseVM
     convenience init(material:Material) {
         self.init()
         self.material = material
-        self.material_image = material.image?.imageScaled(width: 64)
+        self.material_image = material.image?.imageScaled(width: 58)
         self.material_number = material.quantity
     }
     
@@ -137,9 +137,17 @@ class MaterialMgmtHeader : UICollectionReusableView
 class MaterialMgmtCell : UICollectionViewCell, UITextFieldDelegate
 {
     weak var current_first_responder:UITextField?
+    
+    lazy var collection_bg:UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    
     lazy var material_image:UIImageView = {
         let view = UIImageView()
-        view.contentMode = .top
+        view.contentMode = .center
         view.clipsToBounds = true
         return view
     }()
@@ -148,7 +156,7 @@ class MaterialMgmtCell : UICollectionViewCell, UITextFieldDelegate
         let label = UITextField()
         label.textAlignment = .right
         label.font = .font(size: 11)
-        label.textColor = UIColor(hex: "#A4A4A4")
+        label.textColor = UIColor(hex: "#363636")
         label.keyboardType = .numberPad
         label.delegate = self
         label.textAlignment = .right
@@ -167,7 +175,7 @@ class MaterialMgmtCell : UICollectionViewCell, UITextFieldDelegate
         let label = UILabel()
         label.textAlignment = .right
         label.font = .font(size: 11)
-        label.textColor = UIColor(hex: "#A4A4A4")
+        label.textColor = UIColor(hex: "#363636")
         return label
     }()
     
@@ -183,14 +191,23 @@ class MaterialMgmtCell : UICollectionViewCell, UITextFieldDelegate
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubview(self.material_image)
+        self.addSubview(self.collection_bg)
+        self.collection_bg.addSubview(self.material_image)
         self.addSubview(self.material_number_label)
         self.addSubview(self.unit_number_label)
         
+        self.collection_bg.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
+            maker.top.equalToSuperview()
+            maker.left.equalToSuperview()
+            maker.right.equalToSuperview()
+            maker.height.equalTo(weakself.collection_bg.snp.width)
+        }
+        
+        
         self.material_image.snp.makeConstraints { maker in
             maker.size.equalTo(CGSize(width: 64, height: 72))
-            maker.top.equalToSuperview()
-            maker.centerX.equalToSuperview()
+            maker.center.equalToSuperview()
         }
         
         self.material_number_label.snp.makeConstraints {[weak self] maker in
@@ -203,7 +220,7 @@ class MaterialMgmtCell : UICollectionViewCell, UITextFieldDelegate
         self.unit_number_label.snp.makeConstraints {[weak self] maker in
             guard let weakself = self else {return}
             maker.right.equalTo(weakself.material_image.snp.right)
-            maker.bottom.equalToSuperview().inset(5)
+            maker.top.equalTo(weakself.collection_bg.snp.bottom).offset(3)
             maker.width.equalTo(10)
         }
         
@@ -251,9 +268,9 @@ class MaterialMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSou
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-        layout.itemSize = CGSize(width: 68, height: 95)
+        layout.itemSize = CGSize(width: 72, height: 100)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.backgroundColor = .white
+        collection.backgroundColor = UIColor(hex: "#EFEFEF")
         collection.register(MaterialMgmtCell.self, forCellWithReuseIdentifier: MaterialMgmtVC.REUSE_IDENTIFIER)
         collection.register(MaterialMgmtHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: HEADER_REUSE_IDENTIFIER)
         collection.delegate = self
