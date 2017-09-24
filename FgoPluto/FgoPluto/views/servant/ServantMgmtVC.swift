@@ -106,10 +106,9 @@ class ServantMgmtHeader : UICollectionReusableView
 
 class ServantMgmtCell : UICollectionViewCell
 {
-    lazy var collection_bg:UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .center
-        view.image = UIImage(named: "collection_bg")
+    lazy var collection_bg:UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
         return view
     }()
     
@@ -147,29 +146,29 @@ class ServantMgmtCell : UICollectionViewCell
         super.init(frame: frame)
         
         self.addSubview(self.collection_bg)
-        self.addSubview(self.servant_image)
+        self.collection_bg.addSubview(self.servant_image)
         self.addSubview(self.servant_evolve_label)
         self.addSubview(self.servant_skills_label)
         
-        self.collection_bg.snp.makeConstraints {maker in
+        self.collection_bg.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
             maker.top.equalToSuperview()
-            maker.bottom.equalToSuperview()
             maker.left.equalToSuperview()
             maker.right.equalToSuperview()
+            maker.height.equalTo(weakself.collection_bg.snp.width)
         }
         
         self.servant_image.snp.makeConstraints { maker in
             maker.size.equalTo(CGSize(width: 64, height: 72))
-            maker.top.equalToSuperview().inset(10)
-            maker.centerX.equalToSuperview()
+            maker.center.equalToSuperview()
         }
         
         self.servant_evolve_label.snp.makeConstraints {[weak self] maker in
             guard let weakself = self else {return}
             maker.left.equalTo(weakself.servant_image.snp.left)
-            maker.top.equalTo(weakself.servant_image.snp.bottom)
+            maker.top.equalTo(weakself.collection_bg.snp.bottom).offset(3)
         }
-        
+
         self.servant_skills_label.snp.makeConstraints {[weak self] maker in
             guard let weakself = self else {return}
             maker.left.equalTo(weakself.servant_image.snp.left)
@@ -192,15 +191,15 @@ class ServantMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-        layout.itemSize = CGSize(width: 90, height: 120)
+        layout.itemSize = CGSize(width: 80, height: 120)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.backgroundColor = .white
+        collection.backgroundColor = UIColor(hex: "#EFEFEF")
         collection.register(ServantMgmtCell.self, forCellWithReuseIdentifier: ServantMgmtVC.REUSE_IDENTIFIER)
         collection.register(ServantMgmtHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: HEADER_REUSE_IDENTIFIER)
         collection.delegate = self
         collection.dataSource = self
-        collection.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
-        layout.headerReferenceSize = CGSize(width: collection.frame.size.width, height: 64);
+        collection.contentInset = UIEdgeInsetsMake(0, 20, 0, 20)
+        layout.headerReferenceSize = CGSize(width: collection.frame.size.width, height: 44);
         return collection
     }()
     
