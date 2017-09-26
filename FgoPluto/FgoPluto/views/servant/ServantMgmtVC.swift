@@ -188,9 +188,8 @@ class ServantMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
     static let HEADER_REUSE_IDENTIFIER:String = "ServantMgmtHeader"
     
     lazy var servantCollection: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
+        let layout = FgoLayout()
+        layout.itemSpace = 5
         layout.itemSize = CGSize(width: 80, height: 120)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = UIColor(hex: "#EFEFEF")
@@ -198,8 +197,8 @@ class ServantMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSour
         collection.register(ServantMgmtHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: HEADER_REUSE_IDENTIFIER)
         collection.delegate = self
         collection.dataSource = self
-        collection.contentInset = UIEdgeInsetsMake(0, 20, 0, 20)
-        layout.headerReferenceSize = CGSize(width: collection.frame.size.width, height: 44);
+        collection.contentInset = UIEdgeInsetsMake(10, 20, 10, 20)
+        layout.headerHeight = 44;
         return collection
     }()
     

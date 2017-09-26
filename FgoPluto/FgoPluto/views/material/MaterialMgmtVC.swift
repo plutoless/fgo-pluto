@@ -30,7 +30,7 @@ class MaterialMgmtCellVM : BaseVM
     convenience init(material:Material) {
         self.init()
         self.material = material
-        self.material_image = material.image?.imageScaled(width: 58)
+        self.material_image = material.image?.imageScaled(width: 64)
         self.material_number = material.quantity
     }
     
@@ -265,18 +265,17 @@ class MaterialMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSou
     static let HEADER_REUSE_IDENTIFIER:String = "MaterialMgmtHeader"
     
     lazy var materialCollection: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        layout.itemSize = CGSize(width: 72, height: 100)
+        let layout = FgoLayout()
+        layout.itemSize = CGSize(width: 80, height: 105)
+        layout.itemSpace = 5
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = UIColor(hex: "#EFEFEF")
         collection.register(MaterialMgmtCell.self, forCellWithReuseIdentifier: MaterialMgmtVC.REUSE_IDENTIFIER)
         collection.register(MaterialMgmtHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: HEADER_REUSE_IDENTIFIER)
         collection.delegate = self
         collection.dataSource = self
-        collection.contentInset = UIEdgeInsetsMake(15, 5, 0, 5)
-        layout.headerReferenceSize = CGSize(width: collection.frame.size.width, height: 32);
+        collection.contentInset = UIEdgeInsetsMake(15, 10, 15, 10)
+        layout.headerHeight = 32;
         return collection
     }()
     
