@@ -33,37 +33,6 @@ class MaterialMgmtCellVM : BaseVM
         self.material_image = material.image?.imageScaled(width: 64)
         self.material_number = material.quantity
     }
-    
-    func formattedNumber() -> String{
-        let input = Double(self.material_number)
-        var output = input
-        
-        if(input >= 1*pow(10, 12)){
-            output = input / (1*pow(10, 12))
-        } else if(input >= 1*pow(10, 8)){
-            output = input / (1*pow(10, 8))
-        } else if(input >= 1*pow(10, 4)){
-            output = input / (1*pow(10, 4))
-        }
-        
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 2
-        formatter.numberStyle = .decimal
-        return formatter.string(from: NSNumber(value: output)) ?? "\(self.material_number)"
-    }
-    
-    func formattedUnit() -> String{
-        let input = Double(self.material_number)
-        
-        if(input >= 1*pow(10, 12)){
-            return "万亿"
-        } else if(input >= 1*pow(10, 8)){
-            return "亿"
-        } else if(input >= 1*pow(10, 4)){
-            return "万"
-        }
-        return "个"
-    }
 }
 
 class MaterialMgmtSectionVM : BaseVM
@@ -183,8 +152,8 @@ class MaterialMgmtCell : UICollectionViewCell, UITextFieldDelegate
         willSet{
             guard let vm:MaterialMgmtCellVM = newValue else {return}
             self.material_image.image = vm.material_image
-            self.material_number_label.text = "\(vm.formattedNumber())"
-            self.unit_number_label.text = "\(vm.formattedUnit())"
+            self.material_number_label.text = "\(ValueFormatter.format_abbr_big_number(value: Double(vm.material_number)))"
+            self.unit_number_label.text = "\(ValueFormatter.format_unit_big_number(value: Double(vm.material_number)))"
         }
     }
     
@@ -259,15 +228,16 @@ extension MaterialMgmtCell
 }
 
 
-class MaterialMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
+class MaterialMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, FgoLayoutDelegate
 {
     static let REUSE_IDENTIFIER:String = "MaterialMgmtCell"
     static let HEADER_REUSE_IDENTIFIER:String = "MaterialMgmtHeader"
     
     lazy var materialCollection: UICollectionView = {
         let layout = FgoLayout()
-        layout.itemSize = CGSize(width: 80, height: 105)
+        layout.itemWidth = 80
         layout.itemSpace = 5
+        layout.delegate = self
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = UIColor(hex: "#EFEFEF")
         collection.register(MaterialMgmtCell.self, forCellWithReuseIdentifier: MaterialMgmtVC.REUSE_IDENTIFIER)
@@ -281,7 +251,7 @@ class MaterialMgmtVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSou
     
     lazy var import_btn:UIButton = {
         let btn = UIButton(type: .roundedRect)
-        let icon = UIImage.templateImage(name: "import", width: 32)
+        let icon = UIImage.templateImage(name: "import", width: 24)
         btn.setImage(icon, for: .normal)
         btn.titleLabel?.font = .font(size: 14)
         btn.tintColor = UIColor(hex: "#363636")
@@ -408,5 +378,9 @@ extension MaterialMgmtVC{
             break
         }
         return UICollectionReusableView(frame:.zero)
+    }
+    
+    func heightAtIndexPath(indexPath: IndexPath) -> CGFloat {
+        return 105
     }
 }

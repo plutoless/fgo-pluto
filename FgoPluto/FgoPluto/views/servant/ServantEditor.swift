@@ -66,7 +66,6 @@ class ServantEditor : BaseView
     
     lazy var title_label:UILabel = {
         let label = UILabel()
-        label.text = "编辑从者"
         label.font = .font(size:14)
         label.textColor = UIColor(hex: "#4A4A4A")
         label.textAlignment = .center
@@ -78,7 +77,7 @@ class ServantEditor : BaseView
         btn.setTitle("完成", for: .normal)
         btn.titleLabel?.font = .font(size:14)
         btn.backgroundColor = UIColor(hex: "#4A90E2")
-        btn.addTarget(self, action: #selector(close), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(save), for: .touchUpInside)
         return btn
     }()
     
@@ -219,10 +218,18 @@ class ServantEditor : BaseView
     }
     
     func onTapMask(_ tap:UITapGestureRecognizer){
-        self.close()
+        self.cancel()
     }
     
-    func close(){
+    func save(){
+        self.close(true)
+    }
+    
+    func cancel(){
+        self.close(false)
+    }
+    
+    func close(_ result:Bool){
         guard let parentView = self.superview, let maskView = parentView.viewWithTag(1000) else {return}
 
         var results:[Int] = [0,0,0,0]

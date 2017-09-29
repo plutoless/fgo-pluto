@@ -9,9 +9,14 @@
 import Foundation
 import UIKit
 
+protocol FgoLayoutDelegate : class {
+    func heightAtIndexPath(indexPath:IndexPath) -> CGFloat
+}
+
 class FgoLayout : UICollectionViewLayout
 {
-    open var itemSize:CGSize = CGSize(width: 44, height: 44)
+    weak var delegate:FgoLayoutDelegate?
+    open var itemWidth:CGFloat = 0
     open var headerHeight:CGFloat = 0
     open var itemSpace:CGFloat = 0
     fileprivate var cache = [UICollectionViewLayoutAttributes]()
@@ -25,6 +30,11 @@ class FgoLayout : UICollectionViewLayout
         return collectionView.bounds.width - (insets.left + insets.right)
     }
     
+    fileprivate func itemSize(indexPath:IndexPath) -> CGSize {
+        guard let dele = self.delegate else {return CGSize(width: self.itemWidth, height: CGFloat(0))}
+        return CGSize(width: self.itemWidth, height: dele.heightAtIndexPath(indexPath: indexPath))
+    }
+    
     override var collectionViewContentSize: CGSize {
         return CGSize(width: contentWidth, height: contentHeight)
     }
@@ -36,14 +46,14 @@ class FgoLayout : UICollectionViewLayout
             return
         }
         // 2
-        let numberOfColumns:Int = Int((self.contentWidth + self.itemSpace) / (self.itemSize.width + self.itemSpace))
+        let numberOfColumns:Int = Int((self.contentWidth + self.itemSpace) / (self.itemWidth + self.itemSpace))
         var xOffset = [CGFloat]()
-        let xStart = (self.contentWidth - (CGFloat(numberOfColumns) * (self.itemSize.width + self.itemSpace) - self.itemSpace))/2.0
+        let xStart = (self.contentWidth - (CGFloat(numberOfColumns) * (self.itemWidth + self.itemSpace) - self.itemSpace))/2.0
         for column in 0..<numberOfColumns {
             if(column == 0){
                 xOffset.append(xStart)
             } else {
-                xOffset.append(xStart + CGFloat(column) * (self.itemSize.width + self.itemSpace))
+                xOffset.append(xStart + CGFloat(column) * (self.itemWidth + self.itemSpace))
             }
         }
         var column = 0
@@ -64,8 +74,8 @@ class FgoLayout : UICollectionViewLayout
                 let indexPath = IndexPath(item: item, section: section)
                 
                 // 4
-                let height = self.itemSize.height
-                let frame = CGRect(x: xOffset[column], y: yOffset[column], width: self.itemSize.width, height: height)
+                let height = self.itemSize(indexPath: indexPath).height
+                let frame = CGRect(x: xOffset[column], y: yOffset[column], width: self.itemWidth, height: height)
                 
                 // 5
                 let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)

@@ -75,6 +75,7 @@ class NavigationBar:BaseView{
     
     override func create_contents() {
         super.create_contents()
+        self.backgroundColor = .white
         self.tintColor = UIColor(hex: "#474747")
         self.addSubview(self.bottom_line)
         self.addSubview(self.titleLabel)

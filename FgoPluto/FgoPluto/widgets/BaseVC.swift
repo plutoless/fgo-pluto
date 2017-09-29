@@ -33,6 +33,16 @@ class BaseVC : UIViewController{
         super.init(coder: aDecoder)
     }
     
+    lazy var back_btn:UIButton = {
+        let btn = UIButton(type: .roundedRect)
+        let icon = UIImage.templateImage(name: "back", width: 32)
+        btn.setImage(icon, for: .normal)
+        btn.titleLabel?.font = .font(size: 14)
+        btn.tintColor = UIColor(hex: "#363636")
+        btn.addTarget(self, action: #selector(on_back), for: .touchUpInside)
+        return btn
+    }()
+    
     override var title: String?{
         willSet{
             self.navigationBar.titleLabel.text = newValue
@@ -41,7 +51,7 @@ class BaseVC : UIViewController{
     
     override func loadView() {
         super.loadView()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor(hex: "#EFEFEF")
         
         self.create_contents()
         
@@ -53,6 +63,10 @@ class BaseVC : UIViewController{
                 maker.left.equalToSuperview()
                 maker.right.equalToSuperview()
             })
+            
+            if(self.navigationController?.viewControllers.count ?? 0 > 1){
+                self.navigationBar.leftBarItems = [self.back_btn]
+            }
         }
         
     }
@@ -60,6 +74,10 @@ class BaseVC : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.set_constraints()
+    }
+    
+    func on_back(){
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

@@ -10,8 +10,9 @@ target 'FgoPluto' do
   pod 'SnapKit', '~> 3.2.0'
   pod 'Alamofire', '~> 4.4'
   pod 'PromiseKit', '~> 4.0'
-  pod 'RealmSwift', '2.10.1' 
-  pod 'GMStepper', '2.0.1'
+  pod 'RealmSwift', '2.10.2' 
+  pod 'GMStepper', '~> 2.0.1'
+  pod 'NHRangeSlider', '~> 0.2'
  
   target 'FgoPlutoTests' do
     inherit! :search_paths

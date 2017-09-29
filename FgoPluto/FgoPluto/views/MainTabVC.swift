@@ -17,6 +17,11 @@ class MainTabVC : BaseVC, TabBarDelegate
     }()
     
     internal weak var currenct_vc:BaseVC?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.didSelectItem(idx: 0)
+    }
 }
 
 
@@ -43,11 +48,6 @@ extension MainTabVC
             maker.left.equalTo(weakself.view)
             maker.right.equalTo(weakself.view)
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.didSelectItem(idx: 0)
     }
     
     internal func switchToVC(to_vc:BaseVC){
