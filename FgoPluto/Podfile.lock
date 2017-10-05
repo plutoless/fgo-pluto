@@ -1,18 +1,18 @@
 PODS:
-  - Alamofire (4.4.0)
+  - Alamofire (4.5.1)
   - GMStepper (2.0.1)
-  - NHRangeSlider (0.2)
-  - PromiseKit (4.2.2):
-    - PromiseKit/Foundation (= 4.2.2)
-    - PromiseKit/QuartzCore (= 4.2.2)
-    - PromiseKit/UIKit (= 4.2.2)
-  - PromiseKit/CorePromise (4.2.2)
-  - PromiseKit/Foundation (4.2.2):
+  - PromiseKit (4.4.0):
+    - PromiseKit/Foundation (= 4.4.0)
+    - PromiseKit/QuartzCore (= 4.4.0)
+    - PromiseKit/UIKit (= 4.4.0)
+  - PromiseKit/CorePromise (4.4.0)
+  - PromiseKit/Foundation (4.4.0):
     - PromiseKit/CorePromise
-  - PromiseKit/QuartzCore (4.2.2):
+  - PromiseKit/QuartzCore (4.4.0):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (4.2.2):
+  - PromiseKit/UIKit (4.4.0):
     - PromiseKit/CorePromise
+  - RangeSeekSlider (1.7.0)
   - Realm (2.10.2):
     - Realm/Headers (= 2.10.2)
   - Realm/Headers (2.10.2)
@@ -23,20 +23,20 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.4)
   - GMStepper (~> 2.0.1)
-  - NHRangeSlider (~> 0.2)
   - PromiseKit (~> 4.0)
+  - RangeSeekSlider (~> 1.7.0)
   - RealmSwift (= 2.10.2)
   - SnapKit (~> 3.2.0)
 
 SPEC CHECKSUMS:
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   GMStepper: 7e20c3cd9fd5ce23e2614f19e66ab97fee727160
-  NHRangeSlider: 2ef13d34bd7d48fcdedcde71c018c093992add7d
-  PromiseKit: 00e8886881f151c7e573d06b437915b0bb2970ec
+  PromiseKit: ecf5fe92275d57ee77c9ede858af47a162e9b97e
+  RangeSeekSlider: 0386c5a9aa5ebcb2fa5238e8a627280cf46c7c0a
   Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
   RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 3d4414c145f5a1762a829292342c3d10c8809da5
+PODFILE CHECKSUM: 420eea59b3b78090527aed06f07a9fbd93936a84
 
 COCOAPODS: 1.2.1

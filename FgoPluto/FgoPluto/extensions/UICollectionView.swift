@@ -19,4 +19,10 @@ extension UICollectionView{
             }
         }
     }
+    
+    open func reloadFgoLayout(){
+        guard let layout:FgoLayout = self.collectionViewLayout as? FgoLayout else {return}
+        layout.dirty = true
+        self.reloadData()
+    }
 }

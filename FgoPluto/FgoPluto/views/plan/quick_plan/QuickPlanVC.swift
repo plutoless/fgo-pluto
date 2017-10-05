@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import RealmSwift
 
+typealias QuickPlanMaterialCount = (Material, Int64)
+
 class QuickPlanAddCellVM : QuickPlanCellVM
 {
     override var reuseIdentifier: String{
@@ -19,8 +21,41 @@ class QuickPlanAddCellVM : QuickPlanCellVM
 
 class QuickPlanServantCellVM : QuickPlanCellVM
 {
+    var servant:Servant?
+    var servant_image:UIImage?
+    var ad_from:Int = 0
+    var ad_to:Int = 0
+    var skill1_from:Int = 0
+    var skill1_to:Int = 0
+    var skill2_from:Int = 0
+    var skill2_to:Int = 0
+    var skill3_from:Int = 0
+    var skill3_to:Int = 0
+    
+    
     override var reuseIdentifier: String{
         return "QuickPlanServantCellVM"
+    }
+    
+    convenience init(plan:PlanItem) {
+        self.init()
+        let servant:Servant = plan.0
+        let ranges:[PlanRange] = plan.1
+        
+        self.servant = servant
+        self.servant_image = servant.image
+        self.ad_from = ranges[0].0
+        self.ad_to = ranges[0].1
+        self.skill1_from = ranges[1].0
+        self.skill1_to = ranges[1].1
+        self.skill2_from = ranges[2].0
+        self.skill2_to = ranges[2].1
+        self.skill3_from = ranges[3].0
+        self.skill3_to = ranges[3].1
+    }
+    
+    override init() {
+        super.init()
     }
 }
 
@@ -28,6 +63,21 @@ class QuickPlanMaterialCellVM : QuickPlanCellVM
 {
     override var reuseIdentifier: String{
         return "QuickPlanMaterialCellVM"
+    }
+    
+    var material:Material?
+    var quantity:Int64 = 0
+    var material_image:UIImage?
+    
+    convenience init(count:QuickPlanMaterialCount) {
+        self.init()
+        self.material = count.0
+        self.quantity = count.1
+        self.material_image = self.material?.image
+    }
+    
+    override init() {
+        super.init()
     }
 }
 
@@ -56,9 +106,132 @@ class QuickPlanVM : BaseVM
     override init(){
         super.init()
         
-        let section = QuickPlanSectionVM(title: "选择从者")
+        var section = QuickPlanSectionVM(title: "选择从者")
         section.cells.append(QuickPlanAddCellVM())
         self.sections.append(section)
+        
+        section = QuickPlanSectionVM(title: "欠缺材料")
+        self.sections.append(section)
+        
+        section = QuickPlanSectionVM(title: "材料需求")
+        self.sections.append(section)
+        
+    }
+    
+    private func skill_materials(servant:Servant, from: Int, to:Int) -> [Material]{
+        var materials:[Material] = []
+        for i in from..<to{
+            switch(i){
+            case 1:
+                materials.append(contentsOf: servant.skill1)
+                break;
+            case 2:
+                materials.append(contentsOf: servant.skill2)
+                break;
+            case 3:
+                materials.append(contentsOf: servant.skill3)
+                break;
+            case 4:
+                materials.append(contentsOf: servant.skill4)
+                break;
+            case 5:
+                materials.append(contentsOf: servant.skill5)
+                break;
+            case 6:
+                materials.append(contentsOf: servant.skill6)
+                break;
+            case 7:
+                materials.append(contentsOf: servant.skill7)
+                break;
+            case 8:
+                materials.append(contentsOf: servant.skill8)
+                break;
+            case 9:
+                materials.append(contentsOf: servant.skill9)
+                break;
+            default:
+                break;
+            }
+        }
+        return materials
+    }
+    
+    func calculate_cost(){
+        var materials:[Material] = []
+        for cell_vm:QuickPlanCellVM in self.sections[0].cells{
+            guard let servant_cell_vm:QuickPlanServantCellVM = cell_vm as? QuickPlanServantCellVM, let servant:Servant = servant_cell_vm.servant else {continue}
+            
+            //ad
+            let ad_from = servant_cell_vm.ad_from, ad_to = servant_cell_vm.ad_to
+            for i in ad_from..<ad_to{
+                switch(i){
+                case 0:
+                    materials.append(contentsOf: servant.AdAgain1)
+                    break;
+                case 1:
+                    materials.append(contentsOf: servant.AdAgain2)
+                    break;
+                case 2:
+                    materials.append(contentsOf: servant.AdAgain3)
+                    break;
+                case 3:
+                    materials.append(contentsOf: servant.AdAgain4)
+                    break;
+                default:
+                    break;
+                }
+            }
+            
+            //skill1
+            let skill1_from = servant_cell_vm.skill1_from, skill1_to = servant_cell_vm.skill1_to
+            materials.append(contentsOf: self.skill_materials(servant: servant, from: skill1_from, to: skill1_to))
+            
+            //skill2
+            let skill2_from = servant_cell_vm.skill2_from, skill2_to = servant_cell_vm.skill2_to
+            materials.append(contentsOf: self.skill_materials(servant: servant, from: skill2_from, to: skill2_to))
+            
+            //skill3
+            let skill3_from = servant_cell_vm.skill3_from, skill3_to = servant_cell_vm.skill3_to
+            materials.append(contentsOf: self.skill_materials(servant: servant, from: skill3_from, to: skill3_to))
+        }
+        
+        
+        //all materials
+        var material_count_map:[Int:QuickPlanMaterialCount] = [:]
+        
+        for material:Material in materials{
+            let mid:Int = material.id
+            let count = material_count_map[mid]
+            
+            if(count == nil){
+                material_count_map[mid] = (material, 0)
+            }
+            
+            let quantity:Int64 = material_count_map[mid]!.1
+            material_count_map[mid] = (material, quantity + 1)
+        }
+        
+        var material_cell_vms:[QuickPlanMaterialCellVM] = []
+        for count:QuickPlanMaterialCount in material_count_map.values{
+            material_cell_vms.append(QuickPlanMaterialCellVM(count: count))
+        }
+        
+        self.sections[2].cells = material_cell_vms
+        
+        //lacking materials
+        var lacking_material_cell_vms:[QuickPlanMaterialCellVM] = []
+        for count:QuickPlanMaterialCount in material_count_map.values{
+            let required_no:Int64 = count.1
+            let hold_no:Int64 = count.0.quantity
+            let lacking_no:Int64 = required_no - hold_no
+            if(lacking_no <= 0){
+                continue
+            }
+            
+            let lacking_count:QuickPlanMaterialCount = (count.0, lacking_no)
+            lacking_material_cell_vms.append(QuickPlanMaterialCellVM(count: lacking_count))
+        }
+        self.sections[1].cells = lacking_material_cell_vms
     }
 }
 
@@ -72,30 +245,166 @@ class QuickPlanAddCell : QuickPlanCell
         view.image = icon
         return view
     }()
+    lazy var bg:UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
     override func create_contents() {
         super.create_contents()
-        self.addSubview(self.icon_view)
+        self.addSubview(self.bg)
+        self.bg.addSubview(self.icon_view)
     }
     
     override func set_constraints() {
         super.set_constraints()
-        self.icon_view.snp.makeConstraints { maker in
+        self.bg.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
+            maker.top.equalToSuperview()
             maker.left.equalToSuperview()
             maker.right.equalToSuperview()
-            maker.top.equalToSuperview()
-            maker.bottom.equalToSuperview()
+            maker.height.equalTo(weakself.bg.snp.width).offset(30)
+        }
+        self.icon_view.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
         }
     }
 }
 
 class QuickPlanServantCell : QuickPlanCell
 {
+    override var viewModel: QuickPlanCellVM?{
+        willSet{
+            guard let vm : QuickPlanServantCellVM = newValue as? QuickPlanServantCellVM else {return}
+            self.servant_image.image = vm.servant_image
+            self.plan_ad_desc.text = "再临 \(vm.ad_from)-\(vm.ad_to)"
+            self.plan_skill_desc.text = "\(vm.skill1_from)-\(vm.skill1_to) \(vm.skill2_from)-\(vm.skill2_to) \(vm.skill3_from)-\(vm.skill3_to)"
+        }
+    }
     
+    lazy var bg:UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    lazy var servant_image:UIImageView = {
+        let view = UIImageView()
+        return view
+    }()
+    
+    lazy var plan_ad_desc:UILabel = {
+        let label = UILabel()
+        label.font = .font(size: 12)
+        label.textAlignment = .center
+        label.textColor = UIColor(hex:"#363636")
+        return label
+    }()
+    
+    lazy var plan_skill_desc:UILabel = {
+        let label = UILabel()
+        label.font = .font(size: 10)
+        label.textAlignment = .center
+        label.textColor = UIColor(hex:"#363636")
+        return label
+    }()
+    
+    override func create_contents() {
+        super.create_contents()
+        self.addSubview(self.bg)
+        self.bg.addSubview(self.servant_image)
+        self.addSubview(self.plan_ad_desc)
+        self.addSubview(self.plan_skill_desc)
+    }
+    
+    override func set_constraints() {
+        super.set_constraints()
+        self.bg.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
+            maker.top.equalToSuperview()
+            maker.left.equalToSuperview()
+            maker.right.equalToSuperview()
+            maker.height.equalTo(weakself.bg.snp.width).offset(30)
+        }
+        
+        self.servant_image.snp.makeConstraints { maker in
+            maker.size.equalTo(CGSize(width: 64, height: 72))
+            maker.top.equalToSuperview().inset(5)
+            maker.centerX.equalToSuperview()
+        }
+        self.plan_ad_desc.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
+            maker.left.equalTo(weakself.bg.snp.left)
+            maker.right.equalTo(weakself.bg.snp.right)
+            maker.top.equalTo(weakself.servant_image.snp.bottom).offset(3)
+        }
+        self.plan_skill_desc.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
+            maker.left.equalTo(weakself.bg.snp.left)
+            maker.right.equalTo(weakself.bg.snp.right)
+            maker.top.equalTo(weakself.plan_ad_desc.snp.bottom)
+        }
+    }
 }
 
 class QuickPlanMaterialCell : QuickPlanCell
 {
+    override var viewModel: QuickPlanCellVM?{
+        willSet{
+            guard let vm : QuickPlanMaterialCellVM = newValue as? QuickPlanMaterialCellVM else {return}
+            self.material_image.image = vm.material_image
+            self.material_count_label.text = "\(vm.quantity)"
+        }
+    }
     
+    lazy var bg:UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    lazy var material_image:UIImageView = {
+        let view = UIImageView()
+        return view
+    }()
+    
+    lazy var material_count_label:UILabel = {
+        let label = UILabel()
+        label.font = .font(size: 12)
+        label.textAlignment = .center
+        label.textColor = UIColor(hex:"#363636")
+        return label
+    }()
+    
+    override func create_contents() {
+        super.create_contents()
+        self.addSubview(self.bg)
+        self.bg.addSubview(self.material_image)
+        self.addSubview(self.material_count_label)
+    }
+    
+    override func set_constraints() {
+        super.set_constraints()
+        self.bg.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
+            maker.top.equalToSuperview()
+            maker.left.equalToSuperview()
+            maker.right.equalToSuperview()
+            maker.height.equalTo(weakself.bg.snp.width).offset(18)
+        }
+        
+        self.material_image.snp.makeConstraints { maker in
+            maker.size.equalTo(CGSize(width: 64, height: 72))
+            maker.top.equalToSuperview().inset(5)
+            maker.centerX.equalToSuperview()
+        }
+        self.material_count_label.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
+            maker.left.equalTo(weakself.bg.snp.left)
+            maker.right.equalTo(weakself.bg.snp.right)
+            maker.top.equalTo(weakself.material_image.snp.bottom).offset(3)
+        }
+    }
 }
 
 class QuickPlanCell : UICollectionViewCell
@@ -170,7 +479,7 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
         collection.register(QuickPlanHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: HEADER_REUSE_IDENTIFIER)
         collection.delegate = self
         collection.dataSource = self
-//        collection.contentInset = UIEdgeInsetsMake(15, 10, 15, 10)
+        collection.contentInset = UIEdgeInsetsMake(15, 10, 15, 10)
         layout.headerHeight = 32;
         return collection
     }()
@@ -224,7 +533,7 @@ extension QuickPlanVC
     func heightAtIndexPath(indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return 105
+            return 130
         default:
             return 105
         }
@@ -255,7 +564,16 @@ extension QuickPlanVC
         let cellVM = section.cells[indexPath.row]
         
         if(cellVM.isKind(of: QuickPlanAddCellVM.self)){
-            ServantPickerVC.pickFromVC(vc: self)
+            QuickPlanServantPickerVC.pickFromVC(vc: self).then{[weak self] item -> Void in
+                guard let plan_item:PlanItem = item else {return}
+                let vm = QuickPlanServantCellVM(plan: plan_item)
+                guard let plan_vm:QuickPlanVM = self?.viewModel as? QuickPlanVM else {return}
+                plan_vm.sections[0].cells.insert(vm, at: 0)
+                plan_vm.calculate_cost()
+                self?.plan_collection.reloadFgoLayout()
+            }.catch{error in
+                
+            }
         }
     }
 }

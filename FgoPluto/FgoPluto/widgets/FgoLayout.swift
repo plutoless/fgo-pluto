@@ -19,6 +19,7 @@ class FgoLayout : UICollectionViewLayout
     open var itemWidth:CGFloat = 0
     open var headerHeight:CGFloat = 0
     open var itemSpace:CGFloat = 0
+    open var dirty:Bool = false
     fileprivate var cache = [UICollectionViewLayoutAttributes]()
     fileprivate var contentHeight: CGFloat = 0
     
@@ -41,6 +42,13 @@ class FgoLayout : UICollectionViewLayout
     
     override func prepare() {
         super.prepare()
+        
+        //clen cahce if layout is dirty
+        if(self.dirty){
+            self.cache = []
+            self.dirty = false
+        }
+        
         // 1
         guard cache.isEmpty == true, let collectionView = collectionView else {
             return

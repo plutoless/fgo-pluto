@@ -12,7 +12,7 @@ target 'FgoPluto' do
   pod 'PromiseKit', '~> 4.0'
   pod 'RealmSwift', '2.10.2' 
   pod 'GMStepper', '~> 2.0.1'
-  pod 'NHRangeSlider', '~> 0.2'
+  pod 'RangeSeekSlider', '~> 1.7.0'
  
   target 'FgoPlutoTests' do
     inherit! :search_paths
@@ -22,6 +22,14 @@ target 'FgoPluto' do
   target 'FgoPlutoUITests' do
     inherit! :search_paths
     # Pods for testing
+  end
+
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['SWIFT_VERSION'] = '3.2'
+      end
+    end
   end
 
 end
