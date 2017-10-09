@@ -59,6 +59,10 @@ class QuickPlanServantPickerVM : BaseVM
     
     override init(){
         super.init()
+    }
+    
+    convenience init(selectedServants:[Servant]){
+        self.init()
         
         let servantsMap:[Int:[Servant]] = ChaldeaManager.sharedInstance.servantsByClass()
         
@@ -68,7 +72,9 @@ class QuickPlanServantPickerVM : BaseVM
             section.kind_number = kind
             guard let servants = servantsMap[kind] else {continue}
             for servant:Servant in servants{
-                section.cells.append(QuickPlanServantPickerCellVM(servant: servant))
+                if(!selectedServants.contains(servant)){
+                    section.cells.append(QuickPlanServantPickerCellVM(servant: servant))
+                }
             }
             sections.append(section)
         }
@@ -208,7 +214,7 @@ class QuickPlanServantPickerVC : BaseVC, UICollectionViewDelegate, UICollectionV
     }()
     
     static func pickFromVC(vc:UIViewController, selectedItems:[Servant]) -> Promise<Servant?>{
-        let picker = QuickPlanServantPickerVC(viewModel: QuickPlanServantPickerVM())
+        let picker = QuickPlanServantPickerVC(viewModel: QuickPlanServantPickerVM(selectedServants: selectedItems))
         vc.navigationController?.pushViewController(picker, animated: true)
         
         return picker.promiseTuple.promise

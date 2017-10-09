@@ -251,9 +251,11 @@ class QuickPlanVM : BaseVM
             material_cell_vms.append(QuickPlanMaterialCellVM(count: count))
         }
         
-        if let qp_material:Material = material_map[900]{
-            let qp_count : QuickPlanMaterialCount = (qp_material, qp)
-            material_cell_vms.append(QuickPlanMaterialCellVM(count: qp_count))
+        if(qp > 0){
+            if let qp_material:Material = material_map[900]{
+                let qp_count : QuickPlanMaterialCount = (qp_material, qp)
+                material_cell_vms.append(QuickPlanMaterialCellVM(count: qp_count))
+            }
         }
         
         
@@ -312,6 +314,11 @@ class QuickPlanAddCell : QuickPlanCell
     }
 }
 
+protocol QuickPlanServantCellDelegate : class
+{
+    func onRemoveBtnPressed(cell:QuickPlanServantCell)
+}
+
 class QuickPlanServantCell : QuickPlanCell
 {
     override var viewModel: QuickPlanCellVM?{
@@ -322,6 +329,14 @@ class QuickPlanServantCell : QuickPlanCell
             self.plan_skill_desc.text = "\(vm.skill1_from)-\(vm.skill1_to) \(vm.skill2_from)-\(vm.skill2_to) \(vm.skill3_from)-\(vm.skill3_to)"
         }
     }
+    
+    weak var delegate:QuickPlanServantCellDelegate?
+    lazy var removeBtn:UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setImage(UIImage(named:"remove")?.imageScaled(width: 18), for: .normal)
+        btn.addTarget(self, action: #selector(self.remove), for: .touchUpInside)
+        return btn
+    }()
     
     lazy var bg:UIView = {
         let view = UIView()
@@ -356,10 +371,17 @@ class QuickPlanServantCell : QuickPlanCell
         self.bg.addSubview(self.servant_image)
         self.addSubview(self.plan_ad_desc)
         self.addSubview(self.plan_skill_desc)
+        self.addSubview(self.removeBtn)
     }
     
     override func set_constraints() {
         super.set_constraints()
+        self.removeBtn.snp.makeConstraints {maker in
+            maker.top.equalToSuperview().inset(-5)
+            maker.right.equalToSuperview().inset(-5)
+            maker.size.equalTo(CGSize(width: 18, height: 18))
+        }
+        
         self.bg.snp.makeConstraints {[weak self] maker in
             guard let weakself = self else {return}
             maker.top.equalToSuperview()
@@ -385,6 +407,10 @@ class QuickPlanServantCell : QuickPlanCell
             maker.right.equalTo(weakself.bg.snp.right)
             maker.top.equalTo(weakself.plan_ad_desc.snp.bottom)
         }
+    }
+    
+    func remove(){
+        self.delegate?.onRemoveBtnPressed(cell:self)
     }
 }
 
@@ -503,7 +529,7 @@ class QuickPlanHeader : UICollectionReusableView
 }
 
 
-class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate, FgoLayoutDelegate, PlanEditDelegate
+class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate, FgoLayoutDelegate, PlanEditDelegate, QuickPlanServantCellDelegate
 {
     static let HEADER_REUSE_IDENTIFIER:String = "QuickPlanHeader"
     static let MATERIAL_REUSE_IDENTIFIER:String = "QuickPlanMaterialCellVM"
@@ -570,6 +596,9 @@ extension QuickPlanVC
         let cellVM = section.cells[indexPath.row]
         guard let cell:QuickPlanCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellVM.reuseIdentifier, for: indexPath) as? QuickPlanCell else {return UICollectionViewCell()}
         cell.viewModel = cellVM
+        if let servant_cell:QuickPlanServantCell = cell as? QuickPlanServantCell{
+            servant_cell.delegate = self
+        }
         return cell
     }
     
@@ -638,16 +667,20 @@ extension QuickPlanVC
             }
         }
     }
-    
-    private func editPlan(){
-        
-    }
 }
 
 extension QuickPlanVC{
     func didFinishEdit(servant: Servant, values: [PlanRange]) {
         guard let plan_vm:QuickPlanVM = self.viewModel as? QuickPlanVM, let cell_vm = plan_vm.servantCellVM(servant: servant) else {return}
         cell_vm.setPlan(plan: (servant, values))
+        plan_vm.calculate_cost()
+        self.plan_collection.reloadFgoLayout()
+    }
+    
+    func onRemoveBtnPressed(cell: QuickPlanServantCell) {
+        guard let cell_vm:QuickPlanServantCellVM = cell.viewModel as? QuickPlanServantCellVM, let plan_vm:QuickPlanVM = self.viewModel as? QuickPlanVM else {return}
+        guard let idx:Int = plan_vm.sections[0].cells.index(of: cell_vm) else {return}
+        plan_vm.sections[0].cells.remove(at: idx)
         plan_vm.calculate_cost()
         self.plan_collection.reloadFgoLayout()
     }
