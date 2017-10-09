@@ -13,7 +13,7 @@ import RangeSeekSlider
 typealias PlanRange = (Int, Int)
 
 protocol PlanEditDelegate : class{
-    func didFinishEdit(servant_id:Int, values:[PlanRange], atIndexPath:IndexPath?)
+    func didFinishEdit(servant:Servant, values:[PlanRange])
 }
 
 class PlanEditorItem : BaseView
@@ -94,17 +94,29 @@ class PlanEditor : BaseView
     
     var items:[PlanEditorItem] = []
     
-    func setValues(values:[Int]){
+    func setValues(values:[PlanRange]){
         for i in 0..<values.count{
-            let value = values[i]
+            let value:PlanRange = values[i]
             let item = self.items[i]
-            item.stepper.selectedMinValue = CGFloat(value)
-            item.stepper.selectedMaxValue = CGFloat(value)
+            item.stepper.selectedMinValue = CGFloat(value.0)
+            item.stepper.selectedMaxValue = CGFloat(value.1)
         }
     }
-    var indexPath:IndexPath?
-    var servant_id:Int = 0
+    var servant:Servant?
     weak var delegate:PlanEditDelegate?
+    
+    convenience init(servant:Servant) {
+        self.init(frame: .zero)
+        self.servant = servant
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     override func create_contents() {
         super.create_contents()
@@ -186,11 +198,20 @@ class PlanEditor : BaseView
         }
     }
     
-    static func showFrom(parent:UIView, values: [Int], servant_id: Int, atIndexPath:IndexPath) -> PlanEditor{
+    static func defaultRanges(servant:Servant) -> [PlanRange]{
+        return [
+            (servant.ad_level, servant.ad_level),
+            (servant.skill1_level+1, servant.skill1_level+1),
+            (servant.skill2_level+1, servant.skill2_level+1),
+            (servant.skill3_level+1, servant.skill3_level+1)
+        ]
+    }
+    
+    static func showFrom(parent:UIView, plan: PlanItem) -> PlanEditor{
         let editor = PlanEditor(frame: .zero)
-        editor.setValues(values: values)
-        editor.servant_id = servant_id
-        editor.indexPath = atIndexPath
+        editor.servant = plan.0
+        let ranges:[PlanRange] = plan.1
+        editor.setValues(values: ranges)
         
         let mask = UIView()
         let tap = UITapGestureRecognizer(target: editor, action: #selector(onTapMask(_:)))
@@ -232,15 +253,22 @@ class PlanEditor : BaseView
         self.close(false)
     }
     
+    func values() -> [PlanRange]{
+        var results:[PlanRange] = []
+        for i in 0..<self.items.count{
+            let item = self.items[i]
+            results.append((lround(Double(item.stepper.selectedMinValue)), lround(Double(item.stepper.selectedMaxValue))))
+        }
+        return results
+    }
+    
     func close(_ result:Bool){
         guard let parentView = self.superview, let maskView = parentView.viewWithTag(1000) else {return}
         if(result){
-            var results:[PlanRange] = []
-            for i in 0..<self.items.count{
-                let item = self.items[i]
-                results.append((lround(Double(item.stepper.selectedMinValue)), lround(Double(item.stepper.selectedMaxValue))))
+            let results:[PlanRange] = self.values()
+            if let servant:Servant = self.servant {
+                self.delegate?.didFinishEdit(servant: servant, values: results)
             }
-            self.delegate?.didFinishEdit(servant_id: self.servant_id, values: results, atIndexPath: self.indexPath)
         }
         
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 5, options: .curveEaseInOut, animations: { [weak self] in

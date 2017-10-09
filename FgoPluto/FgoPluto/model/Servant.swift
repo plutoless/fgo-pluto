@@ -22,7 +22,7 @@ class Servant : BaseObject
     dynamic var skill3_level:Int = 0
     
     dynamic lazy var image:UIImage? = {
-        return UIImage(named: "servant-\(String(format:"%03d", self.id)).jpg")
+        return UIImage(named: "servant-\(String(format:"%03d", self.id)).jpg", in: nil, compatibleWith: nil)
     }()
     let AdAgain1 = List<Material>()
     let AdAgain2 = List<Material>()

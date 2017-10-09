@@ -18,6 +18,9 @@ class ChaldeaManager: NSObject
         static let account = "account"
     }
     
+    static var skill_qp:[[Int64]] = []
+    static var ad_qp:[[Int64]] = []
+    
     //chaldea relevant
     internal var servants:[Servant] = []
     internal var materials:[Material] = []
@@ -113,16 +116,10 @@ class ChaldeaManager: NSObject
     }
     
     private func prepareDataFromJS(){
-        let jscontext = JSContext(virtualMachine: JSVirtualMachine())
-        guard let script_path = Bundle.main.path(forResource: "fgos_material.min", ofType: "js"), let data_js:Data = try? Data(contentsOf: URL(fileURLWithPath: script_path)) else {return}
-        let script = String(data: data_js, encoding: .utf8)
-        let _ = jscontext?.evaluateScript(script)
-        
-        let servants_array:[[String:AnyObject]] = jscontext?.objectForKeyedSubscript("Servantdb").toArray() as? [[String:AnyObject]] ?? []
-        
-        
-        
         do {
+            let servants_array:[[String:AnyObject]] = JSONHelper.loadJsonArray(file: "servants", type: "json") as! [[String:AnyObject]]
+            ChaldeaManager.skill_qp = JSONHelper.loadJsonArray(file: "skill_qp", type: "json") as! [[Int64]]
+            ChaldeaManager.ad_qp = JSONHelper.loadJsonArray(file: "ad_qp", type: "json") as! [[Int64]]
             let realm = try Realm()
             try realm.write {
                 realm.delete(realm.objects(Servant.self))
@@ -131,10 +128,6 @@ class ChaldeaManager: NSObject
                 for item:[String:AnyObject] in servants_array{
                     let servant = Servant()
                     servant.fillvalues(realm: realm, data: item)
-                    
-                    if (servant.id == 152) {
-                        continue
-                    }
                     self.servants.append(servant)
                     realm.add(servant)
                 }
@@ -168,6 +161,16 @@ class ChaldeaManager: NSObject
             }
             
             results[kind]?.append(material)
+        }
+        return results;
+    }
+    
+    func materialsById() -> [Int: Material]{
+        var results:[Int: Material] = [:]
+        
+        for material:Material in self.materials{
+            let mid:Int = material.id
+            results[mid] = material
         }
         return results;
     }

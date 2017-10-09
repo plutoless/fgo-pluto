@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import RealmSwift
 
+typealias PlanItem = (Servant, [PlanRange])
 typealias QuickPlanMaterialCount = (Material, Int64)
 
 class QuickPlanAddCellVM : QuickPlanCellVM
@@ -21,6 +22,7 @@ class QuickPlanAddCellVM : QuickPlanCellVM
 
 class QuickPlanServantCellVM : QuickPlanCellVM
 {
+    var plan_item:PlanItem?
     var servant:Servant?
     var servant_image:UIImage?
     var ad_from:Int = 0
@@ -39,6 +41,11 @@ class QuickPlanServantCellVM : QuickPlanCellVM
     
     convenience init(plan:PlanItem) {
         self.init()
+        self.setPlan(plan: plan)
+    }
+    
+    func setPlan(plan:PlanItem){
+        self.plan_item = plan
         let servant:Servant = plan.0
         let ranges:[PlanRange] = plan.1
         
@@ -118,6 +125,17 @@ class QuickPlanVM : BaseVM
         
     }
     
+    func servantCellVM(servant:Servant) -> QuickPlanServantCellVM?{
+        for cell_vm:QuickPlanCellVM in self.sections[0].cells{
+            guard let servant_cell_vm:QuickPlanServantCellVM = cell_vm as? QuickPlanServantCellVM, let cell_servant:Servant = servant_cell_vm.servant else {continue}
+            
+            if(cell_servant.id == servant.id){
+                return servant_cell_vm
+            }
+        }
+        return nil
+    }
+    
     private func skill_materials(servant:Servant, from: Int, to:Int) -> [Material]{
         var materials:[Material] = []
         for i in from..<to{
@@ -156,8 +174,18 @@ class QuickPlanVM : BaseVM
         return materials
     }
     
+    private func skill_qp(servant:Servant, from:Int, to:Int) -> Int64{
+        var qp:Int64 = 0
+        for i in from..<to{
+            qp += ChaldeaManager.skill_qp[servant.rank][i - 1]
+        }
+        return qp
+    }
+    
     func calculate_cost(){
         var materials:[Material] = []
+        var qp:Int64 = 0
+        let material_map:[Int: Material] = ChaldeaManager.sharedInstance.materialsById()
         for cell_vm:QuickPlanCellVM in self.sections[0].cells{
             guard let servant_cell_vm:QuickPlanServantCellVM = cell_vm as? QuickPlanServantCellVM, let servant:Servant = servant_cell_vm.servant else {continue}
             
@@ -167,15 +195,19 @@ class QuickPlanVM : BaseVM
                 switch(i){
                 case 0:
                     materials.append(contentsOf: servant.AdAgain1)
+                    qp += ChaldeaManager.ad_qp[servant.rank][0]
                     break;
                 case 1:
                     materials.append(contentsOf: servant.AdAgain2)
+                    qp += ChaldeaManager.ad_qp[servant.rank][1]
                     break;
                 case 2:
                     materials.append(contentsOf: servant.AdAgain3)
+                    qp += ChaldeaManager.ad_qp[servant.rank][2]
                     break;
                 case 3:
                     materials.append(contentsOf: servant.AdAgain4)
+                    qp += ChaldeaManager.ad_qp[servant.rank][3]
                     break;
                 default:
                     break;
@@ -185,14 +217,17 @@ class QuickPlanVM : BaseVM
             //skill1
             let skill1_from = servant_cell_vm.skill1_from, skill1_to = servant_cell_vm.skill1_to
             materials.append(contentsOf: self.skill_materials(servant: servant, from: skill1_from, to: skill1_to))
+            qp += self.skill_qp(servant: servant, from: skill1_from, to: skill1_to)
             
             //skill2
             let skill2_from = servant_cell_vm.skill2_from, skill2_to = servant_cell_vm.skill2_to
             materials.append(contentsOf: self.skill_materials(servant: servant, from: skill2_from, to: skill2_to))
+            qp += self.skill_qp(servant: servant, from: skill2_from, to: skill2_to)
             
             //skill3
             let skill3_from = servant_cell_vm.skill3_from, skill3_to = servant_cell_vm.skill3_to
             materials.append(contentsOf: self.skill_materials(servant: servant, from: skill3_from, to: skill3_to))
+            qp += self.skill_qp(servant: servant, from: skill3_from, to: skill3_to)
         }
         
         
@@ -215,6 +250,12 @@ class QuickPlanVM : BaseVM
         for count:QuickPlanMaterialCount in material_count_map.values{
             material_cell_vms.append(QuickPlanMaterialCellVM(count: count))
         }
+        
+        if let qp_material:Material = material_map[900]{
+            let qp_count : QuickPlanMaterialCount = (qp_material, qp)
+            material_cell_vms.append(QuickPlanMaterialCellVM(count: qp_count))
+        }
+        
         
         self.sections[2].cells = material_cell_vms
         
@@ -353,7 +394,9 @@ class QuickPlanMaterialCell : QuickPlanCell
         willSet{
             guard let vm : QuickPlanMaterialCellVM = newValue as? QuickPlanMaterialCellVM else {return}
             self.material_image.image = vm.material_image
-            self.material_count_label.text = "\(vm.quantity)"
+            let formattedValue = ValueFormatter.format_abbr_big_number(value: Double(vm.quantity))
+            let formattedUnit = ValueFormatter.format_unit_big_number(value: Double(vm.quantity))
+            self.material_count_label.text = "\(formattedValue)\(formattedUnit)"
         }
     }
     
@@ -460,7 +503,7 @@ class QuickPlanHeader : UICollectionReusableView
 }
 
 
-class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate, FgoLayoutDelegate
+class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate, FgoLayoutDelegate, PlanEditDelegate
 {
     static let HEADER_REUSE_IDENTIFIER:String = "QuickPlanHeader"
     static let MATERIAL_REUSE_IDENTIFIER:String = "QuickPlanMaterialCellVM"
@@ -562,18 +605,50 @@ extension QuickPlanVC
         guard let vm = self.viewModel as? QuickPlanVM else {return}
         let section = vm.sections[indexPath.section]
         let cellVM = section.cells[indexPath.row]
-        
+
         if(cellVM.isKind(of: QuickPlanAddCellVM.self)){
-            QuickPlanServantPickerVC.pickFromVC(vc: self).then{[weak self] item -> Void in
-                guard let plan_item:PlanItem = item else {return}
-                let vm = QuickPlanServantCellVM(plan: plan_item)
-                guard let plan_vm:QuickPlanVM = self?.viewModel as? QuickPlanVM else {return}
-                plan_vm.sections[0].cells.insert(vm, at: 0)
-                plan_vm.calculate_cost()
-                self?.plan_collection.reloadFgoLayout()
+            var selectedItems : [Servant] = []
+            for cell:QuickPlanCellVM in vm.sections[0].cells{
+                guard let c:QuickPlanServantCellVM = cell as? QuickPlanServantCellVM, let item:PlanItem = c.plan_item else {continue}
+                selectedItems.append(item.0)
+            }
+            
+            QuickPlanServantPickerVC.pickFromVC(vc: self, selectedItems: selectedItems).then{[weak self] item -> Void in
+                guard let servant:Servant = item else {return}
+                //once finished picking servant, add to view,provide plan
+                if let navVC:UINavigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController, let topVC:UIViewController = navVC.topViewController {
+                    let plan_item:PlanItem = (servant, PlanEditor.defaultRanges(servant: servant))
+                    let editor = PlanEditor.showFrom(parent:topVC.view, plan: plan_item)
+                    editor.title_label.text = "设定目标"
+                    editor.delegate = self
+                    
+                    let vm = QuickPlanServantCellVM(plan: plan_item)
+                    guard let plan_vm:QuickPlanVM = self?.viewModel as? QuickPlanVM else {return}
+                    plan_vm.sections[0].cells.insert(vm, at: 0)
+                    self?.plan_collection.reloadFgoLayout()
+                }
             }.catch{error in
                 
             }
+        } else if(cellVM.isKind(of: QuickPlanServantCellVM.self)){
+            if let c:QuickPlanServantCellVM = cellVM as? QuickPlanServantCellVM, let plan:PlanItem = c.plan_item, let navVC:UINavigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController, let topVC:UIViewController = navVC.topViewController{
+                let editor = PlanEditor.showFrom(parent:topVC.view, plan: plan)
+                editor.title_label.text = "设定目标"
+                editor.delegate = self
+            }
         }
+    }
+    
+    private func editPlan(){
+        
+    }
+}
+
+extension QuickPlanVC{
+    func didFinishEdit(servant: Servant, values: [PlanRange]) {
+        guard let plan_vm:QuickPlanVM = self.viewModel as? QuickPlanVM, let cell_vm = plan_vm.servantCellVM(servant: servant) else {return}
+        cell_vm.setPlan(plan: (servant, values))
+        plan_vm.calculate_cost()
+        self.plan_collection.reloadFgoLayout()
     }
 }

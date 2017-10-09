@@ -11,7 +11,7 @@ import UIKit
 
 extension UIImage{
     internal static func templateImage(name:String, width: CGFloat) -> UIImage?{
-        var image = UIImage(named: name)
+        var image = UIImage(named: name, in: nil, compatibleWith: nil)
         image = image?.imageScaled(width: width)
         image = image?.withRenderingMode(.alwaysTemplate)
         return image

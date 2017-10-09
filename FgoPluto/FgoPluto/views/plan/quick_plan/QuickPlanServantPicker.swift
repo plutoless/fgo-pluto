@@ -11,10 +11,10 @@ import UIKit
 import RealmSwift
 import PromiseKit
 
-typealias PlanItem = (Servant, [PlanRange])
 
 class QuickPlanServantPickerCellVM : BaseVM
 {
+    internal var servant:Servant?
     internal var servant_image:UIImage?
     internal var servant_evolve_level:Int = 1
     internal var servant_skill_1:Int = 1
@@ -30,6 +30,7 @@ class QuickPlanServantPickerCellVM : BaseVM
     
     
     func fillServant(servant:Servant){
+        self.servant = servant
         self.servant_id = servant.id
         self.servant_evolve_level = servant.ad_level
         self.servant_skill_1 = servant.skill1_level
@@ -184,11 +185,11 @@ class QuickPlanServantPickerCell : UICollectionViewCell
     }
 }
 
-class QuickPlanServantPickerVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, PlanEditDelegate, FgoLayoutDelegate
+class QuickPlanServantPickerVC : BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, FgoLayoutDelegate
 {
     static let REUSE_IDENTIFIER:String = "QuickPlanServantPickerCell"
     static let HEADER_REUSE_IDENTIFIER:String = "QuickPlanServantPickerHeader"
-    fileprivate let promiseTuple : Promise<PlanItem?>.PendingTuple = Promise<PlanItem?>.pending()
+    fileprivate let promiseTuple : Promise<Servant?>.PendingTuple = Promise<Servant?>.pending()
     
     lazy var servantCollection: UICollectionView = {
         let layout = FgoLayout()
@@ -206,7 +207,7 @@ class QuickPlanServantPickerVC : BaseVC, UICollectionViewDelegate, UICollectionV
         return collection
     }()
     
-    static func pickFromVC(vc:UIViewController) -> Promise<PlanItem?>{
+    static func pickFromVC(vc:UIViewController, selectedItems:[Servant]) -> Promise<Servant?>{
         let picker = QuickPlanServantPickerVC(viewModel: QuickPlanServantPickerVM())
         vc.navigationController?.pushViewController(picker, animated: true)
         
@@ -273,15 +274,11 @@ extension QuickPlanServantPickerVC{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewModel:QuickPlanServantPickerVM = self.viewModel as? QuickPlanServantPickerVM else {return}
-        if let navVC:UINavigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController, let topVC:UIViewController = navVC.topViewController {
-            let sections:[QuickPlanServantPickerSectionVM] = viewModel.sections
-            let cells:[QuickPlanServantPickerCellVM] = sections[indexPath.section].cells
-            let cell:QuickPlanServantPickerCellVM = cells[indexPath.row]
-            let values = [cell.servant_evolve_level, cell.servant_skill_1 + 1, cell.servant_skill_2 + 1, cell.servant_skill_3 + 1]
-            let editor = PlanEditor.showFrom(parent:topVC.view, values: values, servant_id: cell.servant_id, atIndexPath: indexPath)
-            editor.title_label.text = "设定目标"
-            editor.delegate = self
-        }
+        let sections:[QuickPlanServantPickerSectionVM] = viewModel.sections
+        let cells:[QuickPlanServantPickerCellVM] = sections[indexPath.section].cells
+        let cell:QuickPlanServantPickerCellVM = cells[indexPath.row]
+        self.navigationController?.popViewController(animated: true)
+        self.promiseTuple.fulfill(cell.servant)
     }
     
     
@@ -302,22 +299,6 @@ extension QuickPlanServantPickerVC{
             break
         }
         return UICollectionReusableView(frame:.zero)
-    }
-}
-
-extension QuickPlanServantPickerVC
-{
-    func didFinishEdit(servant_id: Int, values: [PlanRange], atIndexPath: IndexPath?) {
-        do{
-            let realm = try Realm()
-            if let servant:Servant = realm.object(ofType: Servant.self, forPrimaryKey: servant_id){
-                let plan_item:PlanItem = (servant, values)
-                self.promiseTuple.fulfill(plan_item)
-                self.navigationController?.popViewController(animated: true)
-            }
-        }catch{
-            print(error)
-        }
     }
 }
 
