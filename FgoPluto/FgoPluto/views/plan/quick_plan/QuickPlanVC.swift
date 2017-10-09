@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import RealmSwift
+import SnapKit
 
 typealias PlanItem = (Servant, [PlanRange])
 typealias QuickPlanMaterialCount = (Material, Int64)
@@ -113,16 +114,9 @@ class QuickPlanVM : BaseVM
     override init(){
         super.init()
         
-        var section = QuickPlanSectionVM(title: "选择从者")
+        let section = QuickPlanSectionVM(title: "选择从者")
         section.cells.append(QuickPlanAddCellVM())
         self.sections.append(section)
-        
-        section = QuickPlanSectionVM(title: "欠缺材料")
-        self.sections.append(section)
-        
-        section = QuickPlanSectionVM(title: "材料需求")
-        self.sections.append(section)
-        
     }
     
     func servantCellVM(servant:Servant) -> QuickPlanServantCellVM?{
@@ -259,7 +253,6 @@ class QuickPlanVM : BaseVM
         }
         
         
-        self.sections[2].cells = material_cell_vms
         
         //lacking materials
         var lacking_material_cell_vms:[QuickPlanMaterialCellVM] = []
@@ -274,7 +267,16 @@ class QuickPlanVM : BaseVM
             let lacking_count:QuickPlanMaterialCount = (count.0, lacking_no)
             lacking_material_cell_vms.append(QuickPlanMaterialCellVM(count: lacking_count))
         }
-        self.sections[1].cells = lacking_material_cell_vms
+        
+        //keep the first section only
+        self.sections = [self.sections[0]]
+        var section = QuickPlanSectionVM(title: "欠缺材料")
+        section.cells = lacking_material_cell_vms
+        self.sections.append(section)
+        
+        section = QuickPlanSectionVM(title: "材料需求")
+        section.cells = material_cell_vms
+        self.sections.append(section)
     }
 }
 
@@ -553,26 +555,91 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
         return collection
     }()
     
+    lazy var plan_btn:UIButton = {
+        let btn = UIButton(type: .roundedRect)
+        btn.setTitle("规划", for: .normal)
+        btn.backgroundColor = UIColor(hex:"#3C9AFB")
+        btn.tintColor = .white
+        btn.titleLabel?.font = .bold_font(size: 14)
+        return btn
+    }()
+    
+    lazy var cost_btn:UIButton = {
+        let btn = UIButton(type: .roundedRect)
+        btn.setTitle("扣除", for: .normal)
+        btn.backgroundColor = UIColor(hex:"#F87477")
+        btn.tintColor = .white
+        btn.titleLabel?.font = .bold_font(size: 14)
+        return btn
+    }()
+    
+    var action_btm_constraint:Constraint?
+    
     override func create_contents() {
         super.create_contents()
         self.navigationBar.titleLabel.text = "快速查询"
         self.view.addSubview(self.plan_collection)
+        self.view.addSubview(self.plan_btn)
+        self.view.addSubview(self.cost_btn)
     }
     
     override func set_constraints() {
         super.set_constraints()
+        
+        self.cost_btn.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
+            maker.height.equalTo(44)
+            maker.width.equalToSuperview().dividedBy(2).inset(7.5)
+            maker.left.equalToSuperview().inset(10)
+            weakself.action_btm_constraint = maker.bottom.equalToSuperview().inset(-50).constraint
+        }
+        
+        self.plan_btn.snp.makeConstraints {[weak self] maker in
+            guard let weakself = self else {return}
+            maker.height.equalTo(44)
+            maker.width.equalToSuperview().dividedBy(2).inset(7.5)
+            maker.right.equalToSuperview().inset(10)
+            maker.bottom.equalTo(weakself.cost_btn.snp.bottom)
+        }
         
         self.plan_collection.snp.makeConstraints {[weak self] maker in
             guard let weakself = self else {return}
             maker.top.equalTo(weakself.navigationBar.snp.bottom)
             maker.left.equalToSuperview()
             maker.right.equalToSuperview()
-            maker.bottom.equalToSuperview()
+            maker.bottom.equalTo(weakself.plan_btn.snp.top)
         }
     }
     
     override func preferredNavigationBarHidden() -> Bool {
         return false
+    }
+    
+    func toggleAction(visible:Bool){
+        if let constraint = self.action_btm_constraint{
+            if(visible){
+                constraint.update(inset: 5)
+            } else {
+                constraint.update(inset: -50)
+            }
+            
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {[weak self] _ in
+                self?.cost_btn.layoutIfNeeded()
+                self?.plan_btn.layoutIfNeeded()
+            }, completion:nil)
+        }
+    }
+    
+    func updateActionVisibility(){
+        guard let plan_vm:QuickPlanVM  = self.viewModel as? QuickPlanVM else {return}
+        for cell_vm:QuickPlanCellVM in plan_vm.sections[0].cells{
+            if(cell_vm.isKind(of: QuickPlanServantCellVM.self)){
+                //set visible, return
+                self.toggleAction(visible: true)
+                return
+            }
+        }
+        self.toggleAction(visible: false)
     }
 }
 
@@ -675,6 +742,7 @@ extension QuickPlanVC{
         cell_vm.setPlan(plan: (servant, values))
         plan_vm.calculate_cost()
         self.plan_collection.reloadFgoLayout()
+        self.updateActionVisibility()
     }
     
     func onRemoveBtnPressed(cell: QuickPlanServantCell) {
@@ -683,5 +751,6 @@ extension QuickPlanVC{
         plan_vm.sections[0].cells.remove(at: idx)
         plan_vm.calculate_cost()
         self.plan_collection.reloadFgoLayout()
+        self.updateActionVisibility()
     }
 }

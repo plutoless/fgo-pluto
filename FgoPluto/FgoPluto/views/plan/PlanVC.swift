@@ -13,9 +13,7 @@ class PlanCell : UITableViewCell
 {
     lazy var bg_view:UIImageView = {
         let imageview = UIImageView()
-        imageview.layer.cornerRadius = 8
-        imageview.contentMode = .right
-        imageview.clipsToBounds = true
+        imageview.contentMode = .scaleAspectFit
         return imageview
     }()
     
@@ -113,13 +111,13 @@ extension PlanVC{
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         default:
-            return 148
+            return 180
         }
     }
     
@@ -129,13 +127,8 @@ extension PlanVC{
         if(indexPath.row == 0){
             let bg = UIImage(named: "plan_quick")
             cell.bg_view.image = bg
-            cell.title_label.text = "快速查询"
-            cell.desc_label.text = "查询从者升级材料"
-        } else if(indexPath.row == 1){
-            let bg = UIImage(named: "plan_plan")
-            cell.bg_view.image = bg
-            cell.title_label.text = "素材规划"
-            cell.desc_label.text = "规划从者材料使用"
+            cell.title_label.text = "快速开始"
+            cell.desc_label.text = "查询规划素材"
         }
         
         return cell
