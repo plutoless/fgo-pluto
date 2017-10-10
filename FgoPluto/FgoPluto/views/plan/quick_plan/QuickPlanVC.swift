@@ -556,24 +556,38 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
     }()
     
     lazy var plan_btn:UIButton = {
-        let btn = UIButton(type: .roundedRect)
-        btn.setTitle("规划", for: .normal)
-        btn.backgroundColor = UIColor(hex:"#3C9AFB")
+        let btn = UIButton(type: .custom)
+        btn.setTitle("加入规划", for: .normal)
         btn.tintColor = .white
+        btn.layer.cornerRadius = 3.0
         btn.titleLabel?.font = .bold_font(size: 14)
         return btn
     }()
     
     lazy var cost_btn:UIButton = {
-        let btn = UIButton(type: .roundedRect)
-        btn.setTitle("扣除", for: .normal)
-        btn.backgroundColor = UIColor(hex:"#F87477")
+        let btn = UIButton(type: .custom)
+        btn.setTitle("扣除素材", for: .normal)
         btn.tintColor = .white
         btn.titleLabel?.font = .bold_font(size: 14)
+        btn.addTarget(self, action: #selector(on_deduct), for: .touchUpInside)
         return btn
     }()
     
     var action_btm_constraint:Constraint?
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        var gradient = self.plan_btn.applyGradient(withColours: [UIColor(hex:"#5594fe"),UIColor(hex:"#3A80F2")])
+        gradient.applyRoundedShadow()
+        self.plan_btn.setBackgroundImage(gradient.toImage(), for: .normal)
+        gradient.colors = gradient.colors?.reversed()
+        self.plan_btn.setBackgroundImage(gradient.toImage(), for: .highlighted)
+        gradient = self.cost_btn.applyGradient(withColours: [UIColor(hex:"#F85866"),UIColor(hex:"#FF0026")])
+        gradient.applyRoundedShadow()
+        self.cost_btn.setBackgroundImage(gradient.toImage(), for: .normal)
+        gradient.colors = gradient.colors?.reversed()
+        self.cost_btn.setBackgroundImage(gradient.toImage(), for: .highlighted)
+    }
     
     override func create_contents() {
         super.create_contents()
@@ -640,6 +654,52 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
             }
         }
         self.toggleAction(visible: false)
+    }
+    
+    func on_deduct(){
+        let alert = UIAlertController(title: "扣除素材", message: "查询的从者等级会被设定到目标等级，同时对应的素材也会被从素材库中扣除，是否确认？", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "确认", style: .destructive) {[weak self] action in
+            self?.deductMaterials()
+            self?.navigationController?.popViewController(animated: true)
+        }
+    
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
+        alert.addAction(cancel)
+        alert.addAction(confirm)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func deductMaterials(){
+        guard let plan_vm:QuickPlanVM = self.viewModel as? QuickPlanVM else {return}
+        
+        do{
+            let realm = try Realm()
+            //update servant
+            for cellvm:QuickPlanCellVM in plan_vm.sections[0].cells{
+                guard let servant_vm:QuickPlanServantCellVM = cellvm as? QuickPlanServantCellVM, let plan_item:PlanItem = servant_vm.plan_item else {continue}
+                let servant:Servant = plan_item.0
+                let plan:[PlanRange] = plan_item.1
+                try realm.write {
+                    servant.ad_level = plan[0].1
+                    servant.skill1_level = plan[1].1 - 1
+                    servant.skill2_level = plan[2].1 - 1
+                    servant.skill3_level = plan[3].1 - 1
+                }
+            }
+            
+            //update materials
+            for cellvm:QuickPlanCellVM in plan_vm.sections[2].cells{
+                guard let material_vm:QuickPlanMaterialCellVM = cellvm as? QuickPlanMaterialCellVM, let material:Material = material_vm.material else {continue}
+                let quantity:Int64 = material_vm.quantity
+                try realm.write {
+                    material.quantity = material.quantity - quantity
+                }
+            }
+            
+        }catch{
+            print(error)
+        }
     }
 }
 
