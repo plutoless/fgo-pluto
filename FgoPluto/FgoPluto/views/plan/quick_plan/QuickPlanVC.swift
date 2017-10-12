@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import RealmSwift
 import SnapKit
+import JGProgressHUD
 
 typealias PlanItem = (Servant, [PlanRange])
 typealias QuickPlanMaterialCount = (Material, Int64)
@@ -270,13 +271,16 @@ class QuickPlanVM : BaseVM
         
         //keep the first section only
         self.sections = [self.sections[0]]
-        var section = QuickPlanSectionVM(title: "欠缺材料")
-        section.cells = lacking_material_cell_vms
-        self.sections.append(section)
         
-        section = QuickPlanSectionVM(title: "材料需求")
+        var section = QuickPlanSectionVM(title: "材料需求")
         section.cells = material_cell_vms
         self.sections.append(section)
+        
+        if(lacking_material_cell_vms.count > 0){
+            section = QuickPlanSectionVM(title: "欠缺材料")
+            section.cells = lacking_material_cell_vms
+            self.sections.append(section)
+        }
     }
 }
 
@@ -557,19 +561,21 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
     
     lazy var plan_btn:UIButton = {
         let btn = UIButton(type: .custom)
-        btn.setTitle("加入规划", for: .normal)
+        btn.setTitle("素材不足，马上添加素材计划", for: .normal)
         btn.tintColor = .white
         btn.layer.cornerRadius = 3.0
         btn.titleLabel?.font = .bold_font(size: 14)
+        btn.applyShadow()
         return btn
     }()
     
     lazy var cost_btn:UIButton = {
         let btn = UIButton(type: .custom)
-        btn.setTitle("扣除素材", for: .normal)
+        btn.setTitle("消耗素材升级从者", for: .normal)
         btn.tintColor = .white
         btn.titleLabel?.font = .bold_font(size: 14)
         btn.addTarget(self, action: #selector(on_deduct), for: .touchUpInside)
+        btn.applyShadow()
         return btn
     }()
     
@@ -580,13 +586,9 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
         var gradient = self.plan_btn.applyGradient(withColours: [UIColor(hex:"#5594fe"),UIColor(hex:"#3A80F2")])
         gradient.applyRoundedShadow()
         self.plan_btn.setBackgroundImage(gradient.toImage(), for: .normal)
-        gradient.colors = gradient.colors?.reversed()
-        self.plan_btn.setBackgroundImage(gradient.toImage(), for: .highlighted)
         gradient = self.cost_btn.applyGradient(withColours: [UIColor(hex:"#F85866"),UIColor(hex:"#FF0026")])
         gradient.applyRoundedShadow()
         self.cost_btn.setBackgroundImage(gradient.toImage(), for: .normal)
-        gradient.colors = gradient.colors?.reversed()
-        self.cost_btn.setBackgroundImage(gradient.toImage(), for: .highlighted)
     }
     
     override func create_contents() {
@@ -603,16 +605,16 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
         self.cost_btn.snp.makeConstraints {[weak self] maker in
             guard let weakself = self else {return}
             maker.height.equalTo(44)
-            maker.width.equalToSuperview().dividedBy(2).inset(7.5)
-            maker.left.equalToSuperview().inset(10)
+            maker.left.equalToSuperview().inset(20)
+            maker.right.equalToSuperview().inset(20)
             weakself.action_btm_constraint = maker.bottom.equalToSuperview().inset(-50).constraint
         }
         
         self.plan_btn.snp.makeConstraints {[weak self] maker in
             guard let weakself = self else {return}
             maker.height.equalTo(44)
-            maker.width.equalToSuperview().dividedBy(2).inset(7.5)
-            maker.right.equalToSuperview().inset(10)
+            maker.left.equalTo(weakself.cost_btn.snp.left)
+            maker.right.equalTo(weakself.cost_btn.snp.right)
             maker.bottom.equalTo(weakself.cost_btn.snp.bottom)
         }
         
@@ -632,7 +634,7 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
     func toggleAction(visible:Bool){
         if let constraint = self.action_btm_constraint{
             if(visible){
-                constraint.update(inset: 5)
+                constraint.update(inset: 10)
             } else {
                 constraint.update(inset: -50)
             }
@@ -650,9 +652,19 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
             if(cell_vm.isKind(of: QuickPlanServantCellVM.self)){
                 //set visible, return
                 self.toggleAction(visible: true)
+                
+                //show corresponding buttons
+                if(plan_vm.sections.count > 2){
+                    self.cost_btn.isHidden = true
+                    self.plan_btn.isHidden = false
+                } else {
+                    self.cost_btn.isHidden = false
+                    self.plan_btn.isHidden = true
+                }
                 return
             }
         }
+        
         self.toggleAction(visible: false)
     }
     
@@ -689,7 +701,7 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
             }
             
             //update materials
-            for cellvm:QuickPlanCellVM in plan_vm.sections[2].cells{
+            for cellvm:QuickPlanCellVM in plan_vm.sections[1].cells{
                 guard let material_vm:QuickPlanMaterialCellVM = cellvm as? QuickPlanMaterialCellVM, let material:Material = material_vm.material else {continue}
                 let quantity:Int64 = material_vm.quantity
                 try realm.write {
@@ -697,6 +709,12 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
                 }
             }
             
+            
+            let hud = JGProgressHUD(style: .dark)
+            hud.indicatorView = JGProgressHUDSuccessIndicatorView()
+            hud.textLabel.text = "升级成功"
+            hud.show(in: self.navigationController!.view)
+            hud.dismiss(afterDelay: 2.0)
         }catch{
             print(error)
         }

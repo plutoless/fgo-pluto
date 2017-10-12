@@ -77,7 +77,7 @@ extension MainTabVC{
     internal func didSelectItem(idx: Int) {
         self.tabBar.items[idx].selected = true
         if(idx == 0){
-            let vc = PlanVC(viewModel: BaseVM())
+            let vc = HomeVC(viewModel: HomeVM())
             self.switchToVC(to_vc: vc)
         } else if(idx == 1){
             let vc = ServantMgmtVC(viewModel: ServantMgmtVM())

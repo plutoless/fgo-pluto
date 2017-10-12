@@ -13,6 +13,7 @@ target 'FgoPluto' do
   pod 'RealmSwift', '2.10.2' 
   pod 'GMStepper', '~> 2.0.1'
   pod 'RangeSeekSlider', '~> 1.7.0'
+  pod 'JGProgressHUD', '~> 2.0'
  
   target 'FgoPlutoTests' do
     inherit! :search_paths

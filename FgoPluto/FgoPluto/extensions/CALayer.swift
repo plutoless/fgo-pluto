@@ -12,9 +12,6 @@ import UIKit
 extension CALayer{
     func applyRoundedShadow(){
         self.cornerRadius = 5.0
-        self.shadowOffset = CGSize(width: 0, height: 0)
-        self.shadowRadius = 3.0
-        self.shadowOpacity = 0.05
     }
     
     func toImage() -> UIImage?{

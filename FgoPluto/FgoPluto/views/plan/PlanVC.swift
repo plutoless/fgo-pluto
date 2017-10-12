@@ -1,5 +1,5 @@
 //
-//  PlanVC.swift
+//  HomeVC.swift
 //  FgoPluto
 //
 //  Created by Zhang, Qianze on 22/09/2017.
@@ -9,8 +9,76 @@
 import Foundation
 import UIKit
 
-class PlanCell : UITableViewCell
+class HomeCellVM : BaseVM
 {
+    var reuseIdentifier:String{
+        return ""
+    }
+    var height:CGFloat{
+        return 0
+    }
+}
+
+class HomePlanCellVM : HomeCellVM
+{
+    override var reuseIdentifier: String{
+        return "HomePlanCell"
+    }
+    override var height:CGFloat{
+        return 0
+    }
+}
+
+class HomeMenuCellVM : HomeCellVM
+{
+    var bg:UIImage?
+    var title:String = ""
+    var desc:String = ""
+    
+    override var reuseIdentifier: String{
+        return "HomeMenuCell"
+    }
+    override var height:CGFloat{
+        return 180
+    }
+}
+
+class HomeVM : BaseVM
+{
+    var cells:[HomeCellVM] = []
+    
+    override init(){
+        super.init()
+        
+        let menu = HomeMenuCellVM()
+        menu.bg = UIImage(named: "plan_quick")
+        menu.title = "快速开始"
+        menu.desc = "查询规划素材"
+        self.cells.append(menu)
+    }
+}
+
+class HomeCell : UITableViewCell
+{
+    var viewModel : HomeCellVM?
+}
+
+class HomePlanCell : HomeCell
+{
+    
+}
+
+class HomeMenuCell : HomeCell
+{
+    override var viewModel: HomeCellVM?{
+        willSet{
+            guard let vm = newValue as? HomeMenuCellVM else {return}
+            self.bg_view.image = vm.bg
+            self.title_label.text = vm.title
+            self.desc_label.text = vm.desc
+        }
+    }
+    
     lazy var bg_view:UIImageView = {
         let imageview = UIImageView()
         imageview.contentMode = .scaleAspectFit
@@ -78,13 +146,16 @@ class PlanCell : UITableViewCell
     }
 }
 
-class PlanVC : BaseVC, UITableViewDataSource, UITableViewDelegate
+
+class HomeVC : BaseVC, UITableViewDataSource, UITableViewDelegate
 {
     lazy var plan_menu:UITableView = {
         let tbl = UITableView(frame: .zero, style: .grouped)
         tbl.dataSource = self
         tbl.delegate = self
         tbl.separatorStyle = .none
+        tbl.register(HomePlanCell.self, forCellReuseIdentifier: "HomePlanCell")
+        tbl.register(HomeMenuCell.self, forCellReuseIdentifier: "HomeMenuCell")
         return tbl
     }()
     
@@ -106,31 +177,26 @@ class PlanVC : BaseVC, UITableViewDataSource, UITableViewDelegate
     }
 }
 
-extension PlanVC{
+extension HomeVC{
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        guard let vm:HomeVM = self.viewModel as? HomeVM else {return 0}
+        return vm.cells.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        default:
-            return 180
-        }
+        guard let home_vm:HomeVM = self.viewModel as? HomeVM else {return 0}
+        let cell_vm = home_vm.cells[indexPath.row]
+        return cell_vm.height
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = PlanCell(style: .default, reuseIdentifier: nil)
+        guard let home_vm:HomeVM = self.viewModel as? HomeVM, let cell:HomeCell = tableView.dequeueReusableCell(withIdentifier: home_vm.cells[indexPath.row].reuseIdentifier) as? HomeCell else {return UITableViewCell()}
+        let cell_vm = home_vm.cells[indexPath.row]
         
-        if(indexPath.row == 0){
-            let bg = UIImage(named: "plan_quick")
-            cell.bg_view.image = bg
-            cell.title_label.text = "快速开始"
-            cell.desc_label.text = "查询规划素材"
-        }
-        
+        cell.viewModel = cell_vm
         return cell
     }
     

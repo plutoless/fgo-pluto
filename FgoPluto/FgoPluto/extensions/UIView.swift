@@ -42,6 +42,12 @@ enum GradientOrientation {
 }
 
 extension UIView {
+    func applyShadow(){
+        self.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.layer.shadowRadius = 5.0
+        self.layer.shadowOpacity = 0.2
+    }
+    
     func applyGradient(withColours colours: [UIColor], locations: [NSNumber]? = nil) -> CAGradientLayer {
         let gradient = CAGradientLayer()
         gradient.frame = self.bounds

@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.5.1)
   - GMStepper (2.0.1)
+  - JGProgressHUD (2.0)
   - PromiseKit (4.4.0):
     - PromiseKit/Foundation (= 4.4.0)
     - PromiseKit/QuartzCore (= 4.4.0)
@@ -23,6 +24,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.4)
   - GMStepper (~> 2.0.1)
+  - JGProgressHUD (~> 2.0)
   - PromiseKit (~> 4.0)
   - RangeSeekSlider (~> 1.7.0)
   - RealmSwift (= 2.10.2)
@@ -31,12 +33,13 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   GMStepper: 7e20c3cd9fd5ce23e2614f19e66ab97fee727160
+  JGProgressHUD: c402c0f41fc291ca7e33bba2f999118d9682dd9c
   PromiseKit: ecf5fe92275d57ee77c9ede858af47a162e9b97e
   RangeSeekSlider: 0386c5a9aa5ebcb2fa5238e8a627280cf46c7c0a
   Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
   RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 420eea59b3b78090527aed06f07a9fbd93936a84
+PODFILE CHECKSUM: 1c5819d05456544b56ef6483944190772a3e7b14
 
 COCOAPODS: 1.2.1

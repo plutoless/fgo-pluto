@@ -218,6 +218,7 @@
 		0D8280F01F7E7EC600E8B9B1 /* QuickPlanServantPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8280EF1F7E7EC600E8B9B1 /* QuickPlanServantPicker.swift */; };
 		0D837F9F1F8C9FA0008CFA95 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D837F9E1F8C9FA0008CFA95 /* UIView.swift */; };
 		0D837FA11F8CA412008CFA95 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D837FA01F8CA412008CFA95 /* CALayer.swift */; };
+		0D837FA71F8F5306008CFA95 /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D837FA61F8F5306008CFA95 /* Plan.swift */; };
 		0D8B1C591F7555450016CD43 /* PlanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B1C581F7555450016CD43 /* PlanVC.swift */; };
 		0D8B1C5B1F76895A0016CD43 /* collection_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D8B1C5A1F76895A0016CD43 /* collection_bg@2x.png */; };
 		0D8B1C5F1F77E2C30016CD43 /* plan_quick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D8B1C5E1F77E2C30016CD43 /* plan_quick@2x.png */; };
@@ -539,6 +540,7 @@
 		0D8280EF1F7E7EC600E8B9B1 /* QuickPlanServantPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickPlanServantPicker.swift; sourceTree = "<group>"; };
 		0D837F9E1F8C9FA0008CFA95 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		0D837FA01F8CA412008CFA95 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
+		0D837FA61F8F5306008CFA95 /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		0D8B1C581F7555450016CD43 /* PlanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanVC.swift; sourceTree = "<group>"; };
 		0D8B1C5A1F76895A0016CD43 /* collection_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "collection_bg@2x.png"; sourceTree = "<group>"; };
 		0D8B1C5E1F77E2C30016CD43 /* plan_quick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plan_quick@2x.png"; sourceTree = "<group>"; };
@@ -718,6 +720,7 @@
 				0D6930371F6D99C400E4B8AF /* Servant.swift */,
 				0D6930391F6D99D200E4B8AF /* BaseObject.swift */,
 				0D6935E21F6E921300E4B8AF /* Material.swift */,
+				0D837FA61F8F5306008CFA95 /* Plan.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1670,6 +1673,7 @@
 				0D58ED691F8B87E300B5E103 /* ChaldeaManager.swift in Sources */,
 				0D6935DE1F6E7CEE00E4B8AF /* FileManager.swift in Sources */,
 				0D692EBA1F6D4EE500E4B8AF /* UIColor.swift in Sources */,
+				0D837FA71F8F5306008CFA95 /* Plan.swift in Sources */,
 				0D8FBA011F7A8701008CEF15 /* QuickPlanVC.swift in Sources */,
 				0D762D961F6CF4EC00C3E8BF /* NavigationController.swift in Sources */,
 				0D6935E31F6E921300E4B8AF /* Material.swift in Sources */,
