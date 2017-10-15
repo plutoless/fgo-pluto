@@ -565,6 +565,7 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
         btn.tintColor = .white
         btn.layer.cornerRadius = 3.0
         btn.titleLabel?.font = .bold_font(size: 14)
+        btn.addTarget(self, action: #selector(on_plan), for: .touchUpInside)
         btn.applyShadow()
         return btn
     }()
@@ -719,6 +720,46 @@ class QuickPlanVC : BaseVC, UICollectionViewDataSource, UICollectionViewDelegate
             print(error)
         }
     }
+    
+    func on_plan(){
+        self.planMaterials()
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func planMaterials(){
+        guard let plan_vm:QuickPlanVM = self.viewModel as? QuickPlanVM else {return}
+        do{
+            let realm = try Realm()
+            //create plan
+            var servants:[Servant] = []
+            var plans:[String] = []
+            for cellvm:QuickPlanCellVM in plan_vm.sections[0].cells{
+                guard let servant_vm:QuickPlanServantCellVM = cellvm as? QuickPlanServantCellVM, let plan_item:PlanItem = servant_vm.plan_item else {continue}
+                let servant:Servant = plan_item.0
+                let plan:[PlanRange] = plan_item.1
+                servants.append(servant)
+                plans.append("\(plan[0].0),\(plan[0].1),\(plan[1].0),\(plan[1].1),\(plan[2].0),\(plan[2].1),\(plan[3].0),\(plan[3].1),")
+            }
+            
+            let plans_str:String = plans.joined(separator: ";")
+            
+            try realm.write{
+                let stored_plan:Plan = Plan()
+                stored_plan.servants.append(objectsIn: servants)
+                stored_plan.archived_plan = plans_str
+                realm.add(stored_plan)
+            }
+            
+            let hud = JGProgressHUD(style: .dark)
+            hud.indicatorView = JGProgressHUDSuccessIndicatorView()
+            hud.textLabel.text = "计划添加成功"
+            hud.show(in: self.navigationController!.view)
+            hud.dismiss(afterDelay: 2.0)
+        }catch{
+            print(error)
+        }
+    }
+    
 }
 
 

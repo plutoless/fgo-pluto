@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class HomeCellVM : BaseVM
 {
@@ -26,6 +27,10 @@ class HomePlanCellVM : HomeCellVM
     }
     override var height:CGFloat{
         return 0
+    }
+    convenience init(plan:Plan) {
+        self.init()
+        
     }
 }
 
@@ -55,6 +60,18 @@ class HomeVM : BaseVM
         menu.title = "快速开始"
         menu.desc = "查询规划素材"
         self.cells.append(menu)
+        
+        do{
+            let realm = try Realm()
+            var plans:[HomePlanCellVM] = []
+            realm.objects(Plan.self).forEach({plan in
+                let cellvm:HomePlanCellVM = HomePlanCellVM(plan: plan)
+                plans.append(cellvm)
+            })
+            self.cells.append(contentsOf: plans as [HomeCellVM])
+        }catch{
+            print(error)
+        }
     }
 }
 
@@ -65,7 +82,17 @@ class HomeCell : UITableViewCell
 
 class HomePlanCell : HomeCell
 {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .clear
+        self.selectionStyle = .none
+        
+        
+    }
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
 }
 
 class HomeMenuCell : HomeCell
